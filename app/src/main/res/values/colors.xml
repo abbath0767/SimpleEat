@@ -8,4 +8,5 @@
     <color name="list_background_pressed">#ccc</color>
     <color name="drawer_item_color">#fff</color>
     <color name="list_divider">#5e5e5e</color>
+    <color name="item_recipe_type_color">#9f9f9f</color>
 </resources>

@@ -12,4 +12,11 @@
     <string name="information_title">О приложении</string>
     <string name="open_menu">Открыть</string>
     <string name="close_menu">Закрыть</string>
+    <string name="empty_list">Нет рецептов</string>
+    <string name="new_recipe">Новый рецепт</string>
+
+    <string-array name="recipe_type_aray">
+        <item>Супчик</item>
+        <item>Тестовый</item>
+    </string-array>
 </resources>
