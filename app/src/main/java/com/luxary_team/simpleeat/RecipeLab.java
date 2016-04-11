@@ -12,16 +12,6 @@ public class RecipeLab {
 
     ArrayList<Recipe> mRecipes;
 
-    //todo testing
-    public RecipeLab() {
-        mRecipes = new ArrayList<>();
-        for (int i = 0; i < 5 ; i++)
-            mRecipes.add(new Recipe("new recipe %" + i, Recipe.RecipeType.SOUP));
-        mRecipes.add(new Recipe("test recipe in testing", Recipe.RecipeType.TESTING));
-        mRecipes.add(new Recipe("test recipe in testing2", Recipe.RecipeType.TESTING));
-        mRecipes.add(new Recipe("test recipe in testing3", Recipe.RecipeType.SIMPLE));
-    }
-
     private RecipeLab(Context appContext) {
         mContext = appContext;
         mRecipes = new ArrayList<>();
@@ -30,6 +20,9 @@ public class RecipeLab {
         mRecipes.add(new Recipe("test recipe in testing", Recipe.RecipeType.TESTING));
         mRecipes.add(new Recipe("test recipe in testing2", Recipe.RecipeType.TESTING));
         mRecipes.add(new Recipe("test recipe in testing3", Recipe.RecipeType.SIMPLE));
+        Recipe test = new Recipe("test favorite", Recipe.RecipeType.SOUP);
+        test.setFavotite(true);
+        mRecipes.add(test);
 
     }
 

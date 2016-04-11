@@ -6,6 +6,7 @@ public class Recipe {
     private UUID mId;
     private String mTitle;
     private RecipeType mType;
+    private boolean favorite;
 
     public Recipe(String title, RecipeType type) {
         mId = UUID.randomUUID();
@@ -25,6 +26,10 @@ public class Recipe {
         return mId;
     }
 
+    public void setFavotite(boolean favorite) {this.favorite = favorite;}
+
+    public boolean isFavorite() {return favorite;}
+
     public void setRecipeType(RecipeType type) {this.mType = type;}
 
     public RecipeType getRecipeType() {return mType;}
@@ -38,7 +43,8 @@ public class Recipe {
         //todo need string values?
         SOUP ("Супы"),
         TESTING ("TestingRecipeType"),
-        SIMPLE ("simple recipe");
+        SIMPLE ("simple recipes"),
+        FAVORITE ("Избранное");
 
         private final String name;
 

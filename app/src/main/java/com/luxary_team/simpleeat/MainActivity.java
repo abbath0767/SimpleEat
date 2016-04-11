@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         //enabling action bar app icon and behaving it as toggle button
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setDisplayShowHomeEnabled(true);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.string.open_menu,
@@ -55,13 +56,15 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerClosed(View drawerView) {
                 getSupportActionBar().setTitle(myTittle);
                 // calling onPrepareOptionsMenu() to show action bar icons
-                invalidateOptionsMenu();
+//                invalidateOptionsMenu();
+                syncActionBarArrowState();
             }
             @Override
             public void onDrawerOpened(View drawerView) {
                 getSupportActionBar().setTitle(myDrawerTitle);
                 // calling onPrepareOptionsMenu() to show action bar icons
-                invalidateOptionsMenu();
+//                invalidateOptionsMenu();
+                mDrawerToggle.setDrawerIndicatorEnabled(true);
             }
         };
 
@@ -72,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                syncActionBarArrowState();
+            }
+        });
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -145,12 +154,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // toggle nav drawer on selecting action bar app icon/title
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (mDrawerToggle.isDrawerIndicatorEnabled() &&
+                mDrawerToggle.onOptionsItemSelected(item))
             return true;
-        }
         // Handle action bar actions click
         switch (item.getItemId()) {
             case R.id.action_settings:
+                return true;
+            case android.R.id.home:
+                getFragmentManager().popBackStackImmediate();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -184,4 +196,13 @@ public class MainActivity extends AppCompatActivity {
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+
+    private void syncActionBarArrowState() {
+        int backStackEntryCount =
+                getFragmentManager().getBackStackEntryCount();
+        Log.d(MainActivity.TAG, "count " + getSupportFragmentManager().getBackStackEntryCount());
+        mDrawerToggle.setDrawerIndicatorEnabled(backStackEntryCount == 0);
+    }
+
+
 }
