@@ -14,9 +14,14 @@
     <string name="close_menu">Закрыть</string>
     <string name="empty_list">Нет рецептов</string>
     <string name="new_recipe">Новый рецепт</string>
+    <string name="new_recipe_title_title">Название рецепта</string>
+    <string name="new_recipe_title_edit_text_hint">Введите название рецепта</string>
+    <string name="new_recipe_type">Выберите тип</string>
+    <string name="kitchen_add_recipe_button_title">Добавить рецепт</string>
 
-    <string-array name="recipe_type_aray">
-        <item>Супчик</item>
-        <item>Тестовый</item>
+    <string-array name="recipe_type_array">
+        <item>Супы</item>
+        <item>TestingRecipeType</item>
+        <item>simple recipes</item>
     </string-array>
 </resources>

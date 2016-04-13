@@ -14,9 +14,9 @@
         android:id="@+id/new_recipe_title_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/new_recipe_title_edit_text_hint"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="@string/new_recipe_title_edit_text_hint"/>
+        android:layout_marginRight="16dp"/>
 
     <TextView
         style="?android:listSeparatorTextViewStyle"
@@ -25,17 +25,9 @@
         android:text="@string/new_recipe_type"/>
 
     <Spinner
-        android:id="@+id/new_resipe_type_spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/recipe_type_array"/>
+        android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/kitchen_add_recipe_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/kitchen_add_recipe_button_title"
-        />
 
 
 </LinearLayout>

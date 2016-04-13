@@ -8,6 +8,8 @@ public class Recipe {
     private RecipeType mType;
     private boolean favorite;
 
+    public Recipe(UUID uuid) {this.mId = uuid;}
+
     public Recipe(String title, RecipeType type) {
         mId = UUID.randomUUID();
         this.mTitle = title;
@@ -40,7 +42,7 @@ public class Recipe {
     }
 
     public enum RecipeType{
-        //todo need string values?
+        //todo vaforite must be last element!!! always
         SOUP ("Супы"),
         TESTING ("TestingRecipeType"),
         SIMPLE ("simple recipes"),

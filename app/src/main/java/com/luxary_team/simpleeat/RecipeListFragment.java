@@ -11,6 +11,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class RecipeListFragment extends ListFragment {
+    //todo add lifecycle
     public static final String EXTRA_RECIPE_TYPE = "recipeType";
 
     private Recipe.RecipeType mRecipeType;
@@ -31,7 +32,6 @@ public class RecipeListFragment extends ListFragment {
         ListView recipeListView = (ListView) view.findViewById(android.R.id.list);
         recipeListView.setEmptyView(view.findViewById(android.R.id.empty));
 
-
         return view;
     }
 
@@ -47,6 +47,7 @@ public class RecipeListFragment extends ListFragment {
                 mRecipes);
         setListAdapter(adapter);
 
+        setRetainInstance(true);
     }
 
 
@@ -66,7 +67,5 @@ public class RecipeListFragment extends ListFragment {
                 }
             }
         }
-
     }
-
 }
