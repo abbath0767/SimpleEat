@@ -8,6 +8,10 @@ public class Recipe {
     private RecipeType mType;
     private boolean favorite;
 
+    public Recipe() {
+        this.mId = UUID.randomUUID();
+    }
+
     public Recipe(UUID uuid) {this.mId = uuid;}
 
     public Recipe(String title, RecipeType type) {

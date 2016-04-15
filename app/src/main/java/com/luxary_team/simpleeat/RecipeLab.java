@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.luxary_team.simpleeat.database.RecipeCursorWrapper;
 import com.luxary_team.simpleeat.database.RecipeDBHelper;
-import com.luxary_team.simpleeat.database.RecipeDBShema.*;
+import com.luxary_team.simpleeat.database.RecipeDBShema.RecipeTable;
 
 import java.util.ArrayList;
 import java.util.UUID;
