@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence myDrawerTitle;
     //store app tittle
     private CharSequence myTittle;
+    private CharSequence mySubtitle;
 
     private String[] viewNames;
 
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             setTitle(savedInstanceState.getCharSequence("title"));
             myTittle = savedInstanceState.getCharSequence("title");
+            mySubtitle = savedInstanceState.getCharSequence("subtitle");
+            getSupportActionBar().setSubtitle(mySubtitle);
         } else {
             myTittle = getSupportActionBar().getTitle();
         }
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        syncActionBarArrowState();
 
         if (savedInstanceState == null) {
             displayView(0);
@@ -202,8 +206,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         CharSequence title = mDrawerLayout.isDrawerOpen(Gravity.LEFT) ? myDrawerTitle: myTittle;
-        Log.d(TAG, "onSavedInstanceState title = " + title);
         outState.putCharSequence("title", title);
+        if (getSupportActionBar().getSubtitle() != null) {
+            outState.putCharSequence("subtitle", getSupportActionBar().getSubtitle());
+        }
     }
 
     @Override
@@ -218,7 +224,8 @@ public class MainActivity extends AppCompatActivity {
                 getFragmentManager().getBackStackEntryCount();
         Log.d(MainActivity.TAG, "count " + getSupportFragmentManager().getBackStackEntryCount());
         mDrawerToggle.setDrawerIndicatorEnabled(backStackEntryCount == 0);
+        if (backStackEntryCount == 0) {
+            getSupportActionBar().setSubtitle("");
+        }
     }
-
-
 }

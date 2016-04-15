@@ -2,6 +2,8 @@ package com.luxary_team.simpleeat;
 
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,18 +44,48 @@ public class RecipeListFragment extends ListFragment {
         mRecipeType = (Recipe.RecipeType) getArguments().getSerializable(EXTRA_RECIPE_TYPE);
         calculateRecipeArray();
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(mRecipeType.toString());
+
         ArrayAdapter<Recipe> adapter = new ArrayAdapter<Recipe>(getActivity(),
                 android.R.layout.simple_expandable_list_item_1,
                 mRecipes);
         setListAdapter(adapter);
 
         setRetainInstance(true);
+//        setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Recipe recipe = (Recipe) getListAdapter().getItem(position);
 
+        RecipeFragment fragment = RecipeFragment.newInstance(recipe.getId());
+        getFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .addToBackStack(null)
+                .commit();
+
+        super.onListItemClick(l, v, position, id);
+    }
+
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        mRecipes.clear();
+//        calculateRecipeArray();
+//    }
+
+    @Override
+    public void onResume() {
+        super.onPause();
+        mRecipes.clear();
+        calculateRecipeArray();
+    }
 
     public void calculateRecipeArray() {
         ArrayList<Recipe> allRecipes = RecipeLab.get(getActivity()).getRecipes();
+
+        Log.d(MainActivity.TAG, "calculate, before arr length = " + mRecipes.size());
 
         if (mRecipeType.equals(Recipe.RecipeType.FAVORITE)) {
             for (Recipe recipe : allRecipes) {
@@ -67,5 +99,7 @@ public class RecipeListFragment extends ListFragment {
                 }
             }
         }
+
+        Log.d(MainActivity.TAG, "calculate, after arr length = " + mRecipes.size());
     }
 }

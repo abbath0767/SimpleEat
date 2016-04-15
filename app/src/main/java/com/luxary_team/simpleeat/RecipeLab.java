@@ -41,7 +41,7 @@ public class RecipeLab {
     }
 
     public Recipe getRecipe(UUID id) {
-        RecipeCursorWrapper cursor = queryRecipes(RecipeTable.NAME + " = ?", new String[]{id.toString()});
+        RecipeCursorWrapper cursor = queryRecipes(RecipeTable.Cols.UUID + " = ?", new String[]{id.toString()});
 
         try {
             if(cursor.getCount() == 0) {

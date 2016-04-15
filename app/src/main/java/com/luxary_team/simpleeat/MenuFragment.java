@@ -41,6 +41,7 @@ public class MenuFragment extends ListFragment {
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.menu);
 
     }
 
@@ -62,6 +63,7 @@ public class MenuFragment extends ListFragment {
         for (Recipe recipe: mRecipes) {
             if (recipe.isFavorite()) {
                 mUsedRecipeTypes.add(Recipe.RecipeType.FAVORITE);
+                break;
             }
         }
 

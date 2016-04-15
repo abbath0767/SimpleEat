@@ -18,6 +18,8 @@
     <string name="new_recipe_title_edit_text_hint">Введите название рецепта</string>
     <string name="new_recipe_type">Выберите тип</string>
     <string name="kitchen_add_recipe_button_title">Добавить рецепт</string>
+    <string name="is_favorite">Favorite!</string>
+    <string name="delete_button">Удалить</string>
 
     <string-array name="recipe_type_array">
         <item>Супы</item>

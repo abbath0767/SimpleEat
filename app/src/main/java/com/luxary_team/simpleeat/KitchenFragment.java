@@ -1,10 +1,10 @@
 package com.luxary_team.simpleeat;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +27,6 @@ public class KitchenFragment extends Fragment{
     private Recipe.RecipeType[] recipeTypesWithoutFavorite;
     private Recipe mRecipe;
 //    private String[] recipeTypes;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,14 +84,11 @@ public class KitchenFragment extends Fragment{
         mAddRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(MainActivity.TAG, "add new recipe ");
-                Log.d(MainActivity.TAG, "         title: " + mRecipe.getTitle());
-                Log.d(MainActivity.TAG, "          type: " + mRecipe.getRecipeType());
-                Log.d(MainActivity.TAG, "          type: " + mRecipe.getRecipeType().toString());
-
                 lab.addRecipe(mRecipe);
 
-                Log.d(MainActivity.TAG, "recipes count = " + lab.getRecipes().size());
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, new MenuFragment()).commit();
             }
         });
 

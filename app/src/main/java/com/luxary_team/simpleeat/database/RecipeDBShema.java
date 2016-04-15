@@ -2,7 +2,7 @@ package com.luxary_team.simpleeat.database;
 
 public class RecipeDBShema {
     public static final class RecipeTable {
-        public static final String NAME = "reipes";
+        public static final String NAME = "recipes";
 
         public static final class Cols {
             public static final String UUID = "uuid";
