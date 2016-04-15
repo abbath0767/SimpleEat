@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +35,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myTittle = getTitle();
+        if (savedInstanceState != null) {
+            setTitle(savedInstanceState.getCharSequence("title"));
+            myTittle = savedInstanceState.getCharSequence("title");
+        } else {
+            myTittle = getSupportActionBar().getTitle();
+        }
+
+//        myTittle = getTitle();
         myDrawerTitle = getResources().getString(R.string.menu);
 
         //slide menu item
@@ -125,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new MenuFragment();
                 break;
             case 1:
-                Log.d(TAG, "tap kitchen fragment");
                 fragment = new KitchenFragment();
                 break;
             case 2:
@@ -139,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
             setTitle(viewNames[position]);
+            Log.d(TAG, "title in viewer = " + viewNames[position]);
             mDrawerLayout.closeDrawer(mDrawerList);
         } else {
             Log.d(TAG, "ERROR IN CREATE FRAGMENT");
@@ -188,6 +196,14 @@ public class MainActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        CharSequence title = mDrawerLayout.isDrawerOpen(Gravity.LEFT) ? myDrawerTitle: myTittle;
+        Log.d(TAG, "onSavedInstanceState title = " + title);
+        outState.putCharSequence("title", title);
     }
 
     @Override
