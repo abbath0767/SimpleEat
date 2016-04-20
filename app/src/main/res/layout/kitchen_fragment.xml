@@ -30,6 +30,19 @@
         android:layout_height="wrap_content"
         android:entries="@array/recipe_type_array"/>
 
+    <LinearLayout
+        android:id="@+id/list_view_element_container"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+        <ImageButton
+            android:id="@+id/kitchen_button_add_element"
+            android:src="@drawable/ic_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
     <Button
         android:id="@+id/kitchen_add_recipe_button"
         android:layout_width="match_parent"
