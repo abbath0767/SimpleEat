@@ -48,8 +48,8 @@ public class Recipe {
     public enum RecipeType{
         //todo vaforite must be last element!!! always
         SOUP ("Супы"),
-        TESTING ("TestingRecipeType"),
-        SIMPLE ("simple recipes"),
+        SECOND ("Второе"),
+        SIMPLE ("Простой рецепт"),
         FAVORITE ("Избранное");
 
         private final String name;

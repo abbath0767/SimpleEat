@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +29,8 @@ public class KitchenFragment extends Fragment{
     private LinearLayout mLinearLayoutContainerElements;
     private ImageButton mImageButtonAddElement;
 
-    private RecipeLab lab;
+    private RecipeLab mRecipeLab;
+    private RecipeElementLab mRecipeElementLab;
     private Recipe.RecipeType mRecipeType;
     private Recipe.RecipeType[] recipeTypesWithoutFavorite;
     private Recipe mRecipe;
@@ -40,7 +42,10 @@ public class KitchenFragment extends Fragment{
         super.onCreate(savedInstanceState);
 
         mRecipe = new Recipe();
-        lab = RecipeLab.get(getActivity());
+        Log.d(MainActivity.TAG, "new recipe created, uuid = " + mRecipe.getId().toString());
+        mRecipeLab = RecipeLab.get(getActivity());
+        mRecipeElementLab = RecipeElementLab.get(getActivity());
+        mRecipeElements = new ArrayList<>();
     }
 
     @Override
@@ -91,7 +96,10 @@ public class KitchenFragment extends Fragment{
         mAddRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lab.addRecipe(mRecipe);
+                mRecipeLab.addRecipe(mRecipe);
+
+                mRecipeElementLab.setAndSaveRecipeElements(mRecipeElements);
+                Toast.makeText(getActivity(), "Новый рецепт создан успешно!", Toast.LENGTH_SHORT).show();
 
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
@@ -150,16 +158,18 @@ public class KitchenFragment extends Fragment{
 
                     }
                 });
+
             }
         });
-
 
 
         return view;
     }
 
     private void updateRecipeElements(RecipeElement element) {
-        Log.d(MainActivity.TAG, "focused: " + mLinearLayoutContainerElements.getFocusedChild().getId());
-
+        if (!mRecipeElements.contains(element)) {
+            element.setParentRecipeUUID(mRecipe.getId().toString());
+            mRecipeElements.add(element);
+        }
     }
 }

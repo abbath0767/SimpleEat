@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class RecipeFragment extends Fragment {
@@ -22,8 +24,10 @@ public class RecipeFragment extends Fragment {
     private TextView mRecipeTitle;
     private TextView mRecipeTextType;
     private CheckBox mFavorCheckBox;
+    private LinearLayout mLinearLayoutRecipeElements;
 
     private Recipe mRecipe;
+    private ArrayList<RecipeElement> mRecipeElements;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class RecipeFragment extends Fragment {
 
         UUID recipeUuid = (UUID) getArguments().getSerializable(EXTRA_RECIPE_ID);
         mRecipe = RecipeLab.get(getActivity()).getRecipe(recipeUuid);
+        mRecipeElements = RecipeElementLab.get(getActivity()).getRecipeElements(recipeUuid.toString());
 
         setHasOptionsMenu(true);
     }
@@ -54,6 +59,11 @@ public class RecipeFragment extends Fragment {
             }
         });
 
+        mLinearLayoutRecipeElements = (LinearLayout) rootView.
+                findViewById(R.id.recipe_fragment_linear_layout_for_recipe_elements);
+        inflateRecipeElements();
+
+
         return rootView;
     }
 
@@ -64,6 +74,33 @@ public class RecipeFragment extends Fragment {
         fragment.setArguments(args);
 
         return fragment;
+    }
+
+    private void inflateRecipeElements() {
+        Log.d(MainActivity.TAG, "recipeElements count = " + mRecipeElements.size());
+
+        if (mRecipeElements.size() == 0)
+            return;
+
+        for (RecipeElement element: mRecipeElements) {
+            LinearLayout anotherLL = (LinearLayout) LayoutInflater.from(getActivity())
+                    .inflate(R.layout.list_item_recipe_element, null);
+            anotherLL.setId(View.generateViewId());
+
+            mLinearLayoutRecipeElements.addView(anotherLL, mLinearLayoutRecipeElements.getChildCount());
+        }
+
+        for (int i = 0; i < mLinearLayoutRecipeElements.getChildCount(); i++) {
+            View view = mLinearLayoutRecipeElements.getChildAt(i);
+
+            TextView mNameTextView = (TextView) view.findViewById(R.id.recipe_element_name_textView);
+            mNameTextView.setTextSize(20);
+            mNameTextView.setText(mRecipeElements.get(i).getName());
+
+            TextView mCountTextView = (TextView) view.findViewById(R.id.recipe_element_count_textView);
+            mNameTextView.setTextSize(20);
+            mCountTextView.setText(mRecipeElements.get(i).getCount());
+        }
     }
 
     @Override

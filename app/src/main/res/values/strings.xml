@@ -20,10 +20,12 @@
     <string name="kitchen_add_recipe_button_title">Добавить рецепт</string>
     <string name="is_favorite">Favorite!</string>
     <string name="delete_button">Удалить</string>
+    <string name="recipe_type_title">Тип</string>
+    <string name="elements">Ингридиенты</string>
 
     <string-array name="recipe_type_array">
         <item>Супы</item>
-        <item>TestingRecipeType</item>
-        <item>simple recipes</item>
+        <item>Второе</item>
+        <item>Простой рецепт</item>
     </string-array>
 </resources>

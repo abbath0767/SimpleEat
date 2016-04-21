@@ -9,7 +9,6 @@ public class RecipeDBShema {
             public static final String TITLE = "title";
             public static final String FAVORITE = "favorite";
             public static final String TYPE = "type";
-
         }
     }
 }

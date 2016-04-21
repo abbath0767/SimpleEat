@@ -4,7 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.luxary_team.simpleeat.database.RecipeDBShema.*;
+import com.luxary_team.simpleeat.database.RecipeDBShema.RecipeTable;
+import com.luxary_team.simpleeat.database.RecipeElementDBShame.RecipeElementTable;
 
 public class RecipeDBHelper extends SQLiteOpenHelper{
     public static final int VERSION = 1;
@@ -22,6 +23,12 @@ public class RecipeDBHelper extends SQLiteOpenHelper{
                     RecipeTable.Cols.TITLE + ", " +
                     RecipeTable.Cols.FAVORITE + ", " +
                     RecipeTable.Cols.TYPE + ")");
+
+        db.execSQL("create table " + RecipeElementTable.NAME + "(" +
+                    "_id integer primary key autoincrement, " +
+                    RecipeElementTable.Cols.NAME + ", " +
+                    RecipeElementTable.Cols.COUNT + ", " +
+                    RecipeElementTable.Cols.PARENT_UUID + ")");
     }
 
     @Override
