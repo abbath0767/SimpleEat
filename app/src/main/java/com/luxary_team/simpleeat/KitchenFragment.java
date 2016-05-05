@@ -37,6 +37,11 @@ public class KitchenFragment extends Fragment{
     private ArrayList<RecipeElement> mRecipeElements;
 //    private String[] recipeTypes;
 
+    public static Fragment newInstance() {
+        KitchenFragment fragment = new KitchenFragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

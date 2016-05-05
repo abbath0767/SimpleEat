@@ -17,6 +17,11 @@ public class MenuFragment extends ListFragment {
     private ArrayList<Recipe> mRecipes;
     private ArrayList<Recipe.RecipeType> mUsedRecipeTypes = new ArrayList<>();
 
+    public static ListFragment newInstance() {
+        MenuFragment fragment = new MenuFragment();
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.menu_fragment, container, false);
@@ -44,7 +49,6 @@ public class MenuFragment extends ListFragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.menu);
 
     }
-
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Recipe.RecipeType recipeType = (Recipe.RecipeType) getListAdapter().getItem(position);
