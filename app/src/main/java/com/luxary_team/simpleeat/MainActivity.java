@@ -15,11 +15,12 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements KitchenFragment.CallbackOne {
     public static final String TAG = "myLogTag";
 
     private Toolbar mToolbar;
-
+    private Drawer drawer;
+    private FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        FragmentManager fm = getFragmentManager();
+        fm = getFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.content_frame);
 
         if (fragment == null) {
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        Drawer drawer = new DrawerBuilder()
+        drawer = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(mToolbar)
                 .withActionBarDrawerToggle(true)
@@ -54,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Log.d(TAG, "position clicked: " + position);
-                        Fragment fragment;
-                        FragmentManager fm = getFragmentManager();
+                        Fragment fragment = MenuFragment.newInstance();
                         switch (position) {
                             case 1:
                                 fragment = MenuFragment.newInstance();
@@ -67,14 +67,23 @@ public class MainActivity extends AppCompatActivity {
                                 fragment = new Fragment();
                         }
                         fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
-                        setTitle(fragment.toString());
                         return false;
                     }
                 })
                 .withFireOnInitialOnClick(true)
                 .withSavedInstance(savedInstanceState)
+                .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
+                    @Override
+                    public boolean onNavigationClickListener(View view) {
+                        Log.d(TAG, "CLICK");
+                        if (!drawer.getActionBarDrawerToggle().isDrawerIndicatorEnabled()) {
+                            onBackPressed();
+                            return true;
+                        } else
+                            return false;
+                    }
+                })
                 .build();
-
     }
 
     @Override
@@ -85,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "CLCK!");
         switch (item.getItemId()) {
             case R.id.action_settings:
                 return true;
@@ -97,8 +107,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // if navigation drawer is opened, hide the action items
-        return super.onPrepareOptionsMenu(menu);
+    protected void onSaveInstanceState(Bundle outState) {
+        outState = drawer.saveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen())
+            drawer.closeDrawer();
+        if (getFragmentManager().getBackStackEntryCount() == 1) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            drawer.getActionBarDrawerToggle().syncState();
+            getFragmentManager().popBackStack();
+        } else if (getFragmentManager().getBackStackEntryCount() > 0)
+            getFragmentManager().popBackStack();
+        else
+            super.onBackPressed();
+    }
+
+    @Override
+    public void setFirstSelected() {
+        drawer.setSelection(1);
     }
 }

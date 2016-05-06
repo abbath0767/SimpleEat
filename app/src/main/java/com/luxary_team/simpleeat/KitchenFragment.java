@@ -21,7 +21,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class KitchenFragment extends Fragment{
+public class KitchenFragment extends Fragment {
 
     private EditText mTitleEditText;
     private Spinner mTypeSpinner;
@@ -37,6 +37,12 @@ public class KitchenFragment extends Fragment{
     private ArrayList<RecipeElement> mRecipeElements;
 //    private String[] recipeTypes;
 
+    private CallbackOne mCallbackOne;
+
+    interface CallbackOne{
+        void setFirstSelected();
+    }
+
     public static Fragment newInstance() {
         KitchenFragment fragment = new KitchenFragment();
         return fragment;
@@ -51,6 +57,7 @@ public class KitchenFragment extends Fragment{
         mRecipeLab = RecipeLab.get(getActivity());
         mRecipeElementLab = RecipeElementLab.get(getActivity());
         mRecipeElements = new ArrayList<>();
+        mCallbackOne = (CallbackOne) getActivity();
     }
 
     @Override
@@ -106,9 +113,12 @@ public class KitchenFragment extends Fragment{
                 mRecipeElementLab.setAndSaveRecipeElements(mRecipeElements);
                 Toast.makeText(getActivity(), "Новый рецепт создан успешно!", Toast.LENGTH_SHORT).show();
 
+                mCallbackOne.setFirstSelected();
+
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, new MenuFragment()).commit();
+
             }
         });
 
@@ -177,4 +187,5 @@ public class KitchenFragment extends Fragment{
             mRecipeElements.add(element);
         }
     }
+
 }

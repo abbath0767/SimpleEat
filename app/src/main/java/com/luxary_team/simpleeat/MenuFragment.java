@@ -2,7 +2,6 @@ package com.luxary_team.simpleeat;
 
 import android.app.ListFragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,10 +43,6 @@ public class MenuFragment extends ListFragment {
 
         setListAdapter(adapter);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.menu);
-
     }
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
@@ -56,7 +51,7 @@ public class MenuFragment extends ListFragment {
         Log.d(MainActivity.TAG, "on item click " + position);
 
         RecipeListFragment recipeListFragment = (RecipeListFragment) RecipeListFragment.newInstance(recipeType);
-        getFragmentManager().beginTransaction()
+        getActivity().getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, recipeListFragment)
                 .addToBackStack(null)
                 .commit();
@@ -76,4 +71,5 @@ public class MenuFragment extends ListFragment {
                 mUsedRecipeTypes.add(recipe.getRecipeType());
 
     }
+
 }

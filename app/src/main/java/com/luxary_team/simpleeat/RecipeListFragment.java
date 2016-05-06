@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -45,6 +46,7 @@ public class RecipeListFragment extends ListFragment {
         calculateRecipeArray();
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(mRecipeType.toString());
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ArrayAdapter<Recipe> adapter = new ArrayAdapter<Recipe>(getActivity(),
                 android.R.layout.simple_expandable_list_item_1,
@@ -52,6 +54,8 @@ public class RecipeListFragment extends ListFragment {
         setListAdapter(adapter);
 
         setRetainInstance(true);
+
+
 //        setHasOptionsMenu(true);
     }
 
@@ -101,5 +105,16 @@ public class RecipeListFragment extends ListFragment {
         }
 
         Log.d(MainActivity.TAG, "calculate, after arr length = " + mRecipes.size());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getFragmentManager().popBackStackImmediate();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
