@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements KitchenFragment.C
     public void onBackPressed() {
         if (drawer.isDrawerOpen())
             drawer.closeDrawer();
-        if (getFragmentManager().getBackStackEntryCount() == 1) {
+        else if (getFragmentManager().getBackStackEntryCount() == 1) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             drawer.getActionBarDrawerToggle().syncState();
             getFragmentManager().popBackStack();
