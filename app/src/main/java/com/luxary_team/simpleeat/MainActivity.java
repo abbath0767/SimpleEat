@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements KitchenFragment.C
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         fm = getFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.content_frame);
@@ -66,16 +65,18 @@ public class MainActivity extends AppCompatActivity implements KitchenFragment.C
                             default:
                                 fragment = new Fragment();
                         }
+                        fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                        clearSubtitle();
                         return false;
                     }
                 })
-                .withFireOnInitialOnClick(true)
+//                .withFireOnInitialOnClick(true)
                 .withSavedInstance(savedInstanceState)
                 .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
                     @Override
                     public boolean onNavigationClickListener(View view) {
-                        Log.d(TAG, "CLICK");
+                        Log.d(TAG, "CLICK in NCL");
                         if (!drawer.getActionBarDrawerToggle().isDrawerIndicatorEnabled()) {
                             onBackPressed();
                             return true;
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements KitchenFragment.C
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d(TAG, "CLCK!");
+        Log.d(TAG, "CLICK in OIS!");
         switch (item.getItemId()) {
             case R.id.action_settings:
                 return true;
@@ -115,20 +116,30 @@ public class MainActivity extends AppCompatActivity implements KitchenFragment.C
 
     @Override
     public void onBackPressed() {
+        Log.d(TAG, "fm count " + getFragmentManager().getBackStackEntryCount());
         if (drawer.isDrawerOpen())
             drawer.closeDrawer();
         else if (getFragmentManager().getBackStackEntryCount() == 1) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            drawer.getActionBarDrawerToggle().syncState();
+            drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
+            clearSubtitle();
             getFragmentManager().popBackStack();
+            drawer.getActionBarDrawerToggle().syncState();
         } else if (getFragmentManager().getBackStackEntryCount() > 0)
             getFragmentManager().popBackStack();
-        else
+        else {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
             super.onBackPressed();
+        }
     }
 
     @Override
     public void setFirstSelected() {
         drawer.setSelection(1);
+    }
+
+    private void clearSubtitle() {
+        getSupportActionBar().setSubtitle(null);
     }
 }

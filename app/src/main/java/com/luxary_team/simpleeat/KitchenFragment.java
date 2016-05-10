@@ -177,7 +177,6 @@ public class KitchenFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 

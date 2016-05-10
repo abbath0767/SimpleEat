@@ -67,7 +67,7 @@ public class RecipeFragment extends Fragment {
         return rootView;
     }
 
-    public static RecipeFragment newInstance(UUID uuid) {
+    public static Fragment newInstance(UUID uuid) {
         Bundle args = new Bundle();
         args.putSerializable(EXTRA_RECIPE_ID, uuid);
         RecipeFragment fragment = new RecipeFragment();

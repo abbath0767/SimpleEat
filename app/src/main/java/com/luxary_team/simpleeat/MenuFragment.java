@@ -1,5 +1,6 @@
 package com.luxary_team.simpleeat;
 
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,7 +51,7 @@ public class MenuFragment extends ListFragment {
 
         Log.d(MainActivity.TAG, "on item click " + position);
 
-        RecipeListFragment recipeListFragment = (RecipeListFragment) RecipeListFragment.newInstance(recipeType);
+        Fragment recipeListFragment = RecipeListFragment.newInstance(recipeType);
         getActivity().getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, recipeListFragment)
                 .addToBackStack(null)

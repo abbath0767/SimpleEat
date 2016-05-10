@@ -1,5 +1,6 @@
 package com.luxary_team.simpleeat;
 
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -54,8 +55,6 @@ public class RecipeListFragment extends ListFragment {
         setListAdapter(adapter);
 
         setRetainInstance(true);
-
-
 //        setHasOptionsMenu(true);
     }
 
@@ -63,7 +62,7 @@ public class RecipeListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         Recipe recipe = (Recipe) getListAdapter().getItem(position);
 
-        RecipeFragment fragment = RecipeFragment.newInstance(recipe.getId());
+        Fragment fragment = RecipeFragment.newInstance(recipe.getId());
         getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, fragment)
                 .addToBackStack(null)
@@ -109,6 +108,7 @@ public class RecipeListFragment extends ListFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(MainActivity.TAG, "click in RecipeListFr in OIS");
         switch (item.getItemId()) {
             case android.R.id.home:
                 getFragmentManager().popBackStackImmediate();
