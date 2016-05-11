@@ -28,6 +28,7 @@ public class KitchenFragment extends Fragment{
     private Button mAddRecipeButton;
     private LinearLayout mLinearLayoutContainerElements;
     private ImageButton mImageButtonAddElement;
+    private ImageButton mImageButtonRemoveElement;
 
     private RecipeLab mRecipeLab;
     private RecipeElementLab mRecipeElementLab;
@@ -35,6 +36,7 @@ public class KitchenFragment extends Fragment{
     private Recipe.RecipeType[] recipeTypesWithoutFavorite;
     private Recipe mRecipe;
     private ArrayList<RecipeElement> mRecipeElements;
+    private CallbackOne mCallbackOne;
 //    private String[] recipeTypes;
 
     @Override
@@ -46,6 +48,8 @@ public class KitchenFragment extends Fragment{
         mRecipeLab = RecipeLab.get(getActivity());
         mRecipeElementLab = RecipeElementLab.get(getActivity());
         mRecipeElements = new ArrayList<>();
+
+        mCallbackOne = (CallbackOne) getActivity();
     }
 
     @Override
@@ -100,6 +104,8 @@ public class KitchenFragment extends Fragment{
 
                 mRecipeElementLab.setAndSaveRecipeElements(mRecipeElements);
                 Toast.makeText(getActivity(), "Новый рецепт создан успешно!", Toast.LENGTH_SHORT).show();
+
+                mCallbackOne.selectFirstItemInDrawer();
 
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
@@ -159,11 +165,36 @@ public class KitchenFragment extends Fragment{
                     }
                 });
 
+                setClickableRemoveImageButton();
+            }
+        });
+
+        mImageButtonRemoveElement = (ImageButton) view.findViewById(R.id.kitchen_button_remove_element);
+        setClickableRemoveImageButton();
+        mImageButtonRemoveElement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mLinearLayoutContainerElements.removeViewAt(mLinearLayoutContainerElements.getChildCount() - 2);
+                setClickableRemoveImageButton();
+                mRecipeElements.remove(mRecipeElements.size() - 1);
             }
         });
 
 
+
         return view;
+    }
+
+    private void setClickableRemoveImageButton() {
+        //todo need change enabled style
+        if (mLinearLayoutContainerElements.getChildCount() == 1) {
+            mImageButtonRemoveElement.setClickable(false);
+            mImageButtonRemoveElement.setEnabled(false);
+        }
+        else {
+            mImageButtonRemoveElement.setClickable(true);
+            mImageButtonRemoveElement.setEnabled(true);
+        }
     }
 
     private void updateRecipeElements(RecipeElement element) {
@@ -171,5 +202,9 @@ public class KitchenFragment extends Fragment{
             element.setParentRecipeUUID(mRecipe.getId().toString());
             mRecipeElements.add(element);
         }
+    }
+
+    public interface CallbackOne{
+        public void selectFirstItemInDrawer();
     }
 }
