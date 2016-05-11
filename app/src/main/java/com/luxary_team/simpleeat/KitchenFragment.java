@@ -36,7 +36,7 @@ public class KitchenFragment extends Fragment{
     private Recipe.RecipeType[] recipeTypesWithoutFavorite;
     private Recipe mRecipe;
     private ArrayList<RecipeElement> mRecipeElements;
-    private CallbackOne mCallbackOne;
+    private SelectItemDrawerCallback mCallbackOne;
 //    private String[] recipeTypes;
 
     @Override
@@ -49,7 +49,7 @@ public class KitchenFragment extends Fragment{
         mRecipeElementLab = RecipeElementLab.get(getActivity());
         mRecipeElements = new ArrayList<>();
 
-        mCallbackOne = (CallbackOne) getActivity();
+        mCallbackOne = (SelectItemDrawerCallback) getActivity();
     }
 
     @Override
@@ -105,7 +105,7 @@ public class KitchenFragment extends Fragment{
                 mRecipeElementLab.setAndSaveRecipeElements(mRecipeElements);
                 Toast.makeText(getActivity(), "Новый рецепт создан успешно!", Toast.LENGTH_SHORT).show();
 
-                mCallbackOne.selectFirstItemInDrawer();
+                mCallbackOne.selectItemInDrawer(0);
 
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
@@ -204,7 +204,4 @@ public class KitchenFragment extends Fragment{
         }
     }
 
-    public interface CallbackOne{
-        public void selectFirstItemInDrawer();
-    }
 }

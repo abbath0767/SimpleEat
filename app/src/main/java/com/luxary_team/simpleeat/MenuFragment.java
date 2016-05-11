@@ -1,5 +1,6 @@
 package com.luxary_team.simpleeat;
 
+import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ public class MenuFragment extends ListFragment {
 
     private ArrayList<Recipe> mRecipes;
     private ArrayList<Recipe.RecipeType> mUsedRecipeTypes = new ArrayList<>();
+    private Button mButton;
+    private SelectItemDrawerCallback mCallback;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -23,6 +27,18 @@ public class MenuFragment extends ListFragment {
 
         ListView recipeListView = (ListView) view.findViewById(android.R.id.list);
         recipeListView.setEmptyView(view.findViewById(android.R.id.empty));
+
+        mButton = (Button) view.findViewById(R.id.button_add_recipe);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.selectItemInDrawer(1);
+                //todo tested
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, new KitchenFragment()).commit();
+            }
+        });
 
         return view;
     }
@@ -32,6 +48,8 @@ public class MenuFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         mRecipes = RecipeLab.get(getActivity()).getRecipes();
         calculateRecipeType();
+
+        mCallback = (SelectItemDrawerCallback) getActivity();
 
         ArrayAdapter<Recipe.RecipeType> adapter = new ArrayAdapter<Recipe.RecipeType>(getActivity(),
                 android.R.layout.simple_expandable_list_item_1,
