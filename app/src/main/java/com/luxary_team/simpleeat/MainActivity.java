@@ -16,7 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements KitchenFragment.CallbackOne{
     public static final String TAG = "myLogTag";
 
     private DrawerLayout mDrawerLayout;
@@ -227,5 +227,12 @@ public class MainActivity extends AppCompatActivity {
         if (backStackEntryCount == 0) {
             getSupportActionBar().setSubtitle("");
         }
+    }
+
+    @Override
+    public void selectFirstItemInDrawer() {
+        mDrawerList.setItemChecked(0, true);
+        mDrawerList.setSelection(0);
+        setTitle(viewNames[0]);
     }
 }
