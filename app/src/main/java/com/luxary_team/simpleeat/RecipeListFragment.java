@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.luxary_team.simpleeat.objects.Recipe;
+import com.luxary_team.simpleeat.objects.RecipeLab;
+
 import java.util.ArrayList;
 
 public class RecipeListFragment extends ListFragment {

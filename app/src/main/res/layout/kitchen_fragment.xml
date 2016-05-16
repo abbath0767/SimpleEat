@@ -1,69 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-
-    <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/new_recipe_title_title"/>
-
-    <EditText
-        android:id="@+id/new_recipe_title_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="@string/new_recipe_title_edit_text_hint"/>
-
-    <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/new_recipe_type"/>
-
-    <Spinner
-        android:id="@+id/new_resipe_type_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/recipe_type_array"/>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/list_view_element_container"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:text="@string/new_recipe_title_title"/>
 
-            <ImageButton
-                android:id="@+id/kitchen_button_add_element"
-                android:src="@drawable/ic_add"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"/>
+        <EditText
+            android:id="@+id/new_recipe_title_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="@string/new_recipe_title_edit_text_hint"/>
 
-            <ImageButton
-                android:id="@+id/kitchen_button_remove_element"
-                android:src="@drawable/ic_delete_recipe_button"
-                android:layout_width="0dp"
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/new_recipe_type"/>
+
+        <Spinner
+            android:id="@+id/new_resipe_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/recipe_type_array"/>
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/new_recipe_element_title"/>
+
+        <LinearLayout
+            android:id="@+id/list_view_element_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/kitchen_button_add_element"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:src="@drawable/ic_add"/>
+
+                <ImageButton
+                    android:id="@+id/kitchen_button_remove_element"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_delete_recipe_button"/>
+            </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/new_recipe_step_title"/>
+
+        <LinearLayout
+            android:id="@+id/list_view_step_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/kitchen_button_add_step"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:src="@drawable/ic_add"/>
+
+                <ImageButton
+                    android:id="@+id/kitchen_button_remove_step"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_delete_recipe_button"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/kitchen_add_recipe_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/kitchen_add_recipe_button_title"
+            />
+
+
     </LinearLayout>
-
-    <Button
-        android:id="@+id/kitchen_add_recipe_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/kitchen_add_recipe_button_title"
-        />
-
-
-</LinearLayout>
+</ScrollView>

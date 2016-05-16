@@ -3,7 +3,7 @@ package com.luxary_team.simpleeat.database;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import com.luxary_team.simpleeat.RecipeElement;
+import com.luxary_team.simpleeat.objects.RecipeElement;
 import com.luxary_team.simpleeat.database.RecipeElementDBShame.RecipeElementTable;
 
 public class RecipeElementCursorWrapper extends CursorWrapper{

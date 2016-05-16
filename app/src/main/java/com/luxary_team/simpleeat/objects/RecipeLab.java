@@ -1,4 +1,4 @@
-package com.luxary_team.simpleeat;
+package com.luxary_team.simpleeat.objects;
 
 import android.content.ContentValues;
 import android.content.Context;

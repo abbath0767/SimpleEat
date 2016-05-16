@@ -12,6 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.luxary_team.simpleeat.interfaces.SelectItemDrawerCallback;
+import com.luxary_team.simpleeat.objects.Recipe;
+import com.luxary_team.simpleeat.objects.RecipeLab;
+
 import java.util.ArrayList;
 
 public class MenuFragment extends ListFragment {

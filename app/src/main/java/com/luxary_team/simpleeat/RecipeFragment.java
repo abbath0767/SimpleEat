@@ -14,6 +14,11 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.luxary_team.simpleeat.objects.Recipe;
+import com.luxary_team.simpleeat.objects.RecipeElement;
+import com.luxary_team.simpleeat.objects.RecipeElementLab;
+import com.luxary_team.simpleeat.objects.RecipeLab;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -62,7 +67,6 @@ public class RecipeFragment extends Fragment {
         mLinearLayoutRecipeElements = (LinearLayout) rootView.
                 findViewById(R.id.recipe_fragment_linear_layout_for_recipe_elements);
         inflateRecipeElements();
-
 
         return rootView;
     }

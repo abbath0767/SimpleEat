@@ -3,7 +3,7 @@ package com.luxary_team.simpleeat.database;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import com.luxary_team.simpleeat.Recipe;
+import com.luxary_team.simpleeat.objects.Recipe;
 import com.luxary_team.simpleeat.database.RecipeDBShema.RecipeTable;
 
 import java.util.UUID;

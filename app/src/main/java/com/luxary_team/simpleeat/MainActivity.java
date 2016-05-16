@@ -16,6 +16,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.luxary_team.simpleeat.interfaces.SelectItemDrawerCallback;
+
 public class MainActivity extends AppCompatActivity implements SelectItemDrawerCallback {
     public static final String TAG = "myLogTag";
 

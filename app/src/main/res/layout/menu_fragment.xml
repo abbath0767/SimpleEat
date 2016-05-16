@@ -21,11 +21,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/empty_list"
-            android:layout_above="@+id/button_add_crime"
+            android:layout_above="@+id/button_add_recipe"
             android:layout_centerHorizontal="true"/>
 
         <Button
-            android:id="@+id/button_add_crime"
+            android:id="@+id/button_add_recipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"

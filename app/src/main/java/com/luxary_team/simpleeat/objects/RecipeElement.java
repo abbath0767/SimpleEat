@@ -1,17 +1,8 @@
-package com.luxary_team.simpleeat;
+package com.luxary_team.simpleeat.objects;
 
-public class RecipeElement {
+public class RecipeElement extends RecipeChild{
     private String mName;
     private String mCount;
-    private String mParentRecipeUUID;
-
-    public void setParentRecipeUUID(String uuidString) {
-        mParentRecipeUUID = uuidString;
-    }
-
-    public String getParentRecipeUUID() {
-        return mParentRecipeUUID;
-    }
 
     public String getCount() {
         return mCount;

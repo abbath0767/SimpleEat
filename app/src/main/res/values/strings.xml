@@ -17,6 +17,10 @@
     <string name="new_recipe_title_title">Название рецепта</string>
     <string name="new_recipe_title_edit_text_hint">Введите название рецепта</string>
     <string name="new_recipe_type">Выберите тип</string>
+    <string name="new_recipe_element_title">Выберите ингридиенты</string>
+    <string name="new_recipe_step_title">Добавьте шаги</string>
+    <string name="step_number">Шаг №%d</string>
+    <string name="step_hint">Описание шага</string>
     <string name="kitchen_add_recipe_button_title">Добавить рецепт</string>
     <string name="is_favorite">Favorite!</string>
     <string name="delete_button">Удалить</string>
