@@ -229,7 +229,7 @@ public class KitchenFragment extends Fragment{
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        step.setDiscription(s.toString());
+                        step.setName(s.toString());
                         updateArrayOfChilds(step, mRecipeSteps);
                     }
 
@@ -262,7 +262,7 @@ public class KitchenFragment extends Fragment{
         return view;
     }
 
-    //todo delete?
+    //todo delete? need test
     private void setClickableRemoveImageButton() {
         //todo need change enabled style
         if (mLinearLayoutContainerElements.getChildCount() == 1) {
