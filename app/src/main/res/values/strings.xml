@@ -9,7 +9,6 @@
     <string name="menu">Меню</string>
     <string name="first_screen">Меню</string>
     <string name="kitchen_title">Кухня</string>
-    <string name="information_title">О приложении</string>
     <string name="open_menu">Открыть</string>
     <string name="close_menu">Закрыть</string>
     <string name="empty_list">Нет рецептов</string>
@@ -26,6 +25,13 @@
     <string name="delete_button">Удалить</string>
     <string name="recipe_type_title">Тип</string>
     <string name="elements">Ингридиенты</string>
+
+    <string name="information_title">Simple Eat v0.3</string>
+    <string name="information_title_app">Данное приложение позволяет создавать свои рецепты для их использования в будуем
+        сортировать их по спискам, удобным для отображения.</string>
+    <string name="information_title_features">Реализованные фичи:\n1. Создание и просмотр рецепта с шагами, ингридиентами\n2. Сортировка по типам</string>
+    <string name="information_title_features_new">В ближайшем будущем будет реализовано:\n1. Добавление фото для рецептов и шагов
+        \n2. Таймер для шагов\n3. Редизайн =)</string>
 
     <string-array name="recipe_type_array">
         <item>Супы</item>

@@ -1,12 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="16dp">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/information_title"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:text="@string/information_title"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/information_title_app"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/information_title_features"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/information_title_features_new"/>
+
+    <Button
+        android:layout_marginTop="16dp"
+        android:id="@+id/contact_with_us"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Связаться с нами"
+        />
+
+    <Button
+        android:layout_marginTop="16dp"
+        android:id="@+id/inf_button"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Вконтакте"
+        style="@style/myButton"/>
+
 
 </LinearLayout>
