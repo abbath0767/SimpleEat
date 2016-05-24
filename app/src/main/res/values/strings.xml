@@ -38,4 +38,10 @@
         <item>Второе</item>
         <item>Простой рецепт</item>
     </string-array>
+
+    <string name="send_subject">Отзыв о приложении Simple Eat</string>
+    <string name="send_chooser_title">Отправить с помощью...</string>
+    <string name="send_my_email">ng@redmadrobot.com</string>
+    <string name="send_device_info">\n\nВерсия приложения: %1$s\nУстройство: %2$s\nВерсия ОС: Android %3$s</string>
+    <string name="send_my_vk">http://vk.com/abbath</string>
 </resources>
