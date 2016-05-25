@@ -1,6 +1,8 @@
 package com.luxary_team.simpleeat;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,15 +11,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.luxary_team.simpleeat.objects.Recipe;
 import com.luxary_team.simpleeat.objects.RecipeElement;
 import com.luxary_team.simpleeat.objects.RecipeElementLab;
 import com.luxary_team.simpleeat.objects.RecipeLab;
+import com.luxary_team.simpleeat.objects.RecipeStep;
+import com.luxary_team.simpleeat.objects.RecipeStepLab;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -29,10 +35,13 @@ public class RecipeFragment extends Fragment {
     private TextView mRecipeTitle;
     private TextView mRecipeTextType;
     private CheckBox mFavorCheckBox;
+    private Button mAddToBacketButton;
     private LinearLayout mLinearLayoutRecipeElements;
+    private LinearLayout mLinearLayoutRecipeSteps;
 
     private Recipe mRecipe;
     private ArrayList<RecipeElement> mRecipeElements;
+    private ArrayList<RecipeStep> mRecipeSteps;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,7 @@ public class RecipeFragment extends Fragment {
         UUID recipeUuid = (UUID) getArguments().getSerializable(EXTRA_RECIPE_ID);
         mRecipe = RecipeLab.get(getActivity()).getRecipe(recipeUuid);
         mRecipeElements = RecipeElementLab.get(getActivity()).getRecipeElements(recipeUuid.toString());
+        mRecipeSteps = RecipeStepLab.get(getActivity()).getRecipeSteps(recipeUuid.toString());
 
         setHasOptionsMenu(true);
     }
@@ -66,7 +76,25 @@ public class RecipeFragment extends Fragment {
 
         mLinearLayoutRecipeElements = (LinearLayout) rootView.
                 findViewById(R.id.recipe_fragment_linear_layout_for_recipe_elements);
-        inflateRecipeElements();
+        mLinearLayoutRecipeSteps = (LinearLayout) rootView.
+                findViewById(R.id.recipe_fragment_linear_layout_for_recipe_steps);
+
+        inflateRecipeElementsAndSteps();
+
+        mAddToBacketButton = (Button) rootView.findViewById(R.id.recipe_fragment_add_to_backet_button);
+        mAddToBacketButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo need DateBase (change SQLHelper, Table, CursorWrapper) ???
+                //todo we now hawe a Elements TABLE! MF
+                SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("Parent:" + mRecipe.getId().toString(), mRecipe.getTitle());
+                editor.commit();
+                //todo unhardcode
+                Toast.makeText(getActivity(), "Ingridients add to basket", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return rootView;
     }
@@ -80,31 +108,58 @@ public class RecipeFragment extends Fragment {
         return fragment;
     }
 
-    private void inflateRecipeElements() {
+    //todo need refactor
+    private void inflateRecipeElementsAndSteps() {
         Log.d(MainActivity.TAG, "recipeElements count = " + mRecipeElements.size());
 
-        if (mRecipeElements.size() == 0)
-            return;
+        if (mRecipeElements.size() != 0) {
 
-        for (RecipeElement element: mRecipeElements) {
-            LinearLayout anotherLL = (LinearLayout) LayoutInflater.from(getActivity())
-                    .inflate(R.layout.list_item_recipe_element, null);
-            anotherLL.setId(View.generateViewId());
+            for (RecipeElement element : mRecipeElements) {
+                LinearLayout anotherLL = (LinearLayout) LayoutInflater.from(getActivity())
+                        .inflate(R.layout.list_item_recipe_element, null);
+                anotherLL.setId(View.generateViewId());
 
-            mLinearLayoutRecipeElements.addView(anotherLL, mLinearLayoutRecipeElements.getChildCount());
+                mLinearLayoutRecipeElements.addView(anotherLL, mLinearLayoutRecipeElements.getChildCount());
+            }
+
+            for (int i = 0; i < mLinearLayoutRecipeElements.getChildCount(); i++) {
+                View view = mLinearLayoutRecipeElements.getChildAt(i);
+
+                TextView mNameTextView = (TextView) view.findViewById(R.id.recipe_element_name_textView);
+                mNameTextView.setTextSize(20);
+                mNameTextView.setText(mRecipeElements.get(i).getName());
+
+                TextView mCountTextView = (TextView) view.findViewById(R.id.recipe_element_count_textView);
+                mNameTextView.setTextSize(20);
+                mCountTextView.setText(mRecipeElements.get(i).getCount());
+            }
         }
 
-        for (int i = 0; i < mLinearLayoutRecipeElements.getChildCount(); i++) {
-            View view = mLinearLayoutRecipeElements.getChildAt(i);
+        Log.d(MainActivity.TAG, "recipeSteps cpunt = " + mRecipeSteps.size());
 
-            TextView mNameTextView = (TextView) view.findViewById(R.id.recipe_element_name_textView);
-            mNameTextView.setTextSize(20);
-            mNameTextView.setText(mRecipeElements.get(i).getName());
+        if (mRecipeSteps.size() != 0) {
 
-            TextView mCountTextView = (TextView) view.findViewById(R.id.recipe_element_count_textView);
-            mNameTextView.setTextSize(20);
-            mCountTextView.setText(mRecipeElements.get(i).getCount());
+            for (RecipeStep step: mRecipeSteps) {
+                LinearLayout anotherLL = (LinearLayout) LayoutInflater.from(getActivity())
+                        .inflate(R.layout.list_item_recipe_step, null);
+                anotherLL.setId(View.generateViewId());
+
+                mLinearLayoutRecipeSteps.addView(anotherLL, mLinearLayoutRecipeSteps.getChildCount());
+            }
+
+            for (int i = 0; i < mLinearLayoutRecipeSteps.getChildCount(); i++) {
+                View view = mLinearLayoutRecipeSteps.getChildAt(i);
+
+                TextView mNameTextView = (TextView) view.findViewById(R.id.recipe_step_name_textView);
+                mNameTextView.setTextSize(20);
+                mNameTextView.setText(mRecipeSteps.get(i).getName());
+
+                TextView mNumTextView = (TextView) view.findViewById(R.id.recipe_step_num_textView);
+                mNumTextView.setTextSize(20);
+                mNumTextView.setText(String.valueOf(mRecipeSteps.get(i).getNum()));
+            }
         }
+
     }
 
     @Override

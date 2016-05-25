@@ -4,6 +4,7 @@
     <string-array name="views_array">
         <item>Меню</item>
         <item>Кухня</item>
+        <item>Корзина</item>
         <item>О приложении</item>
     </string-array>
     <string name="menu">Меню</string>
@@ -18,6 +19,7 @@
     <string name="new_recipe_type">Выберите тип</string>
     <string name="new_recipe_element_title">Выберите ингридиенты</string>
     <string name="new_recipe_step_title">Добавьте шаги</string>
+    <string name="recipe_steps_separator">Шаги приготовления</string>
     <string name="step_number">Шаг №%d</string>
     <string name="step_hint">Описание шага</string>
     <string name="kitchen_add_recipe_button_title">Добавить рецепт</string>

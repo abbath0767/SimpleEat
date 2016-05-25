@@ -142,6 +142,10 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
                 fragment = new KitchenFragment();
                 break;
             case 2:
+                //todo add BucketFragemnt
+                fragment = new BasketFragment();
+                break;
+            case 3:
                 fragment = new InformationFragment();
                 break;
         }

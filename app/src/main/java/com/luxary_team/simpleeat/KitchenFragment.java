@@ -26,6 +26,7 @@ import com.luxary_team.simpleeat.objects.RecipeElement;
 import com.luxary_team.simpleeat.objects.RecipeElementLab;
 import com.luxary_team.simpleeat.objects.RecipeLab;
 import com.luxary_team.simpleeat.objects.RecipeStep;
+import com.luxary_team.simpleeat.objects.RecipeStepLab;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +45,7 @@ public class KitchenFragment extends Fragment{
 
     private RecipeLab mRecipeLab;
     private RecipeElementLab mRecipeElementLab;
+    private RecipeStepLab mRecipeStepLab;
     private Recipe.RecipeType mRecipeType;
     private Recipe.RecipeType[] recipeTypesWithoutFavorite;
     private Recipe mRecipe;
@@ -62,6 +64,7 @@ public class KitchenFragment extends Fragment{
         Log.d(MainActivity.TAG, "new recipe created, uuid = " + mRecipe.getId().toString());
         mRecipeLab = RecipeLab.get(getActivity());
         mRecipeElementLab = RecipeElementLab.get(getActivity());
+        mRecipeStepLab = RecipeStepLab.get(getActivity());
         mRecipeElements = new ArrayList<>();
         mRecipeSteps = new ArrayList<>();
 
@@ -118,6 +121,11 @@ public class KitchenFragment extends Fragment{
             public void onClick(View v) {
                 mRecipeLab.addRecipe(mRecipe);
 
+                Log.d(MainActivity.TAG, "mRecipeSTeps length = " + mRecipeSteps.size());
+                for (RecipeStep step: mRecipeSteps)
+                    Log.d(MainActivity.TAG, "step: " + step);
+
+                mRecipeStepLab.setAndSaveRecipeSteps(mRecipeSteps);
                 mRecipeElementLab.setAndSaveRecipeElements(mRecipeElements);
                 Toast.makeText(getActivity(), "Новый рецепт создан успешно!", Toast.LENGTH_SHORT).show();
 
@@ -153,7 +161,6 @@ public class KitchenFragment extends Fragment{
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         anotherRecipeElement.setName(s.toString());
-                        //todo tested
                         updateArrayOfChilds(anotherRecipeElement, mRecipeElements);
                     }
 
@@ -173,7 +180,6 @@ public class KitchenFragment extends Fragment{
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         anotherRecipeElement.setCount(s.toString());
-                        //todo debug
                         updateArrayOfChilds(anotherRecipeElement, mRecipeElements);
                     }
 
