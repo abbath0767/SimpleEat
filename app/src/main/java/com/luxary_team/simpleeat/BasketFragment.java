@@ -3,6 +3,8 @@ package com.luxary_team.simpleeat;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -40,7 +44,7 @@ public class BasketFragment extends Fragment {
         SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         mRecipeLab = RecipeLab.get(getActivity());
 
-        for (Map.Entry<String, ?> iter: preferences.getAll().entrySet())
+        for (Map.Entry<String, ?> iter : preferences.getAll().entrySet())
             if (iter.getKey().substring(0, 6).equals("Parent"))
                 mRecipes.add(mRecipeLab.getRecipe(UUID.fromString(
                         iter.getKey().substring(7, iter.getKey().length()))));
@@ -63,51 +67,48 @@ public class BasketFragment extends Fragment {
     }
 
     private class RecipeViewHolder extends RecyclerView.ViewHolder {
-        private CardView cv;
-        private TextView title;
-//        private ListView elements;
+        private CardView cardView; //todo unprofit parametr
+        private TextView recipeTitle;
         private LinearLayout container;
-//        private Recipe recipe;
-//        private ArrayList<String> stepsTitle;
         private ArrayList<RecipeElement> elementList;
-//        private String[] elemStr;
 
         public RecipeViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.basket_fragment_card_view);
-            title = (TextView) itemView.findViewById(R.id.basket_fragment_card_view_text_view_title);
-//            elements = (ListView) itemView.findViewById(R.id.basket_fragment_card_view_list_view);
+            cardView = (CardView) itemView.findViewById(R.id.basket_fragment_card_view);
+            recipeTitle = (TextView) itemView.findViewById(R.id.basket_fragment_card_view_text_view_title);
             container = (LinearLayout) itemView.findViewById(R.id.bastet_card_view_element_container);
         }
 
         public void onBindRecipeViewHolder(Recipe recipe) {
-//            stepsTitle = new ArrayList<>();
+            recipeTitle.setText(recipe.getTitle());
             elementList = RecipeElementLab.get(getActivity()).getRecipeElements(recipe.getId().toString());
 
             Log.d(MainActivity.TAG, "elements = " + elementList);
 
-            for (RecipeElement elem: elementList) {
+            for (RecipeElement elem : elementList) {
                 LinearLayout anotherElementLL = (LinearLayout) LayoutInflater.from(getActivity())
                         .inflate(R.layout.basket_card_view_element_item, null);
                 anotherElementLL.setId(View.generateViewId());
 
                 container.addView(anotherElementLL);
 
-                TextView elemName = (TextView) anotherElementLL.findViewById(R.id.basket_fragment_card_view_layout_text_view_ingr_name);
-                elemName.setText(elem.getName());
-            }
+                final TextView elemName = (TextView) anotherElementLL.findViewById(R.id.basket_fragment_card_view_layout_text_view_ingr_name);
+                elemName.setText(elem.getName() + " / " + elem.getCount());
 
-//            elemStr = new String[elementList.size()];
-//            for (int i = 0; i < elementList.size(); i++)
-//                elemStr[i] = elementList.get(i).getName();
-//
-//
-//
-//            this.recipe = recipe;
-//            title.setText(recipe.getTitle());
-//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-//                    android.R.layout.simple_list_item_multiple_choice, elemStr);
-//            elements.setAdapter(adapter);
+                CheckBox checkBox = (CheckBox) anotherElementLL.findViewById(R.id.basket_fragment_card_view_layout_check_box);
+                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            elemName.setPaintFlags(elemName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                            elemName.setTextColor(Color.GRAY);
+                        } else {
+                            elemName.setPaintFlags(0);
+                            elemName.setTextColor(Color.BLACK);
+                        }
+                    }
+                });
+            }
         }
     }
 
@@ -122,8 +123,7 @@ public class BasketFragment extends Fragment {
         public RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(getActivity())
                     .inflate(R.layout.basket_card_view, parent, false);
-            RecipeViewHolder recipeViewHolder = new RecipeViewHolder(view);
-            return recipeViewHolder;
+            return new RecipeViewHolder(view);
         }
 
         @Override
@@ -141,5 +141,4 @@ public class BasketFragment extends Fragment {
             this.recipes = recipes;
         }
     }
-
 }

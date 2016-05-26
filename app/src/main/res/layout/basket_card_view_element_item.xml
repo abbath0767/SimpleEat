@@ -7,6 +7,7 @@
         android:id="@+id/basket_fragment_card_view_layout_text_view_ingr_name"
         android:layout_width="0dp"
         android:layout_weight="5"
+        android:textColor="@android:color/black"
         android:layout_height="wrap_content"
         android:text="hardcode text"/>
 
