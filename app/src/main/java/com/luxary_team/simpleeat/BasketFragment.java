@@ -11,9 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.luxary_team.simpleeat.objects.Recipe;
+import com.luxary_team.simpleeat.objects.RecipeElement;
+import com.luxary_team.simpleeat.objects.RecipeElementLab;
 import com.luxary_team.simpleeat.objects.RecipeLab;
 
 import java.util.ArrayList;
@@ -62,17 +65,49 @@ public class BasketFragment extends Fragment {
     private class RecipeViewHolder extends RecyclerView.ViewHolder {
         private CardView cv;
         private TextView title;
-        private Recipe recipe;
+//        private ListView elements;
+        private LinearLayout container;
+//        private Recipe recipe;
+//        private ArrayList<String> stepsTitle;
+        private ArrayList<RecipeElement> elementList;
+//        private String[] elemStr;
 
         public RecipeViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.basket_fragment_card_view);
             title = (TextView) itemView.findViewById(R.id.basket_fragment_card_view_text_view_title);
+//            elements = (ListView) itemView.findViewById(R.id.basket_fragment_card_view_list_view);
+            container = (LinearLayout) itemView.findViewById(R.id.bastet_card_view_element_container);
         }
 
         public void onBindRecipeViewHolder(Recipe recipe) {
-            this.recipe = recipe;
-            title.setText(recipe.getTitle());
+//            stepsTitle = new ArrayList<>();
+            elementList = RecipeElementLab.get(getActivity()).getRecipeElements(recipe.getId().toString());
+
+            Log.d(MainActivity.TAG, "elements = " + elementList);
+
+            for (RecipeElement elem: elementList) {
+                LinearLayout anotherElementLL = (LinearLayout) LayoutInflater.from(getActivity())
+                        .inflate(R.layout.basket_card_view_element_item, null);
+                anotherElementLL.setId(View.generateViewId());
+
+                container.addView(anotherElementLL);
+
+                TextView elemName = (TextView) anotherElementLL.findViewById(R.id.basket_fragment_card_view_layout_text_view_ingr_name);
+                elemName.setText(elem.getName());
+            }
+
+//            elemStr = new String[elementList.size()];
+//            for (int i = 0; i < elementList.size(); i++)
+//                elemStr[i] = elementList.get(i).getName();
+//
+//
+//
+//            this.recipe = recipe;
+//            title.setText(recipe.getTitle());
+//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+//                    android.R.layout.simple_list_item_multiple_choice, elemStr);
+//            elements.setAdapter(adapter);
         }
     }
 
