@@ -2,10 +2,12 @@ package com.luxary_team.simpleeat;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -77,6 +79,7 @@ public class BasketFragment extends Fragment {
         private LinearLayout container;
         private ArrayList<RecipeElement> elementList;
         private ImageButton deleteButton;
+        private ImageButton shareButton;
 
         public RecipeViewHolder(View itemView) {
             super(itemView);
@@ -84,9 +87,10 @@ public class BasketFragment extends Fragment {
             recipeTitle = (TextView) itemView.findViewById(R.id.basket_fragment_card_view_text_view_title);
             container = (LinearLayout) itemView.findViewById(R.id.basket_card_view_element_container);
             deleteButton = (ImageButton) itemView.findViewById(R.id.basket_card_view_delete_button);
+            shareButton = (ImageButton) itemView.findViewById(R.id.basket_card_view_share_button);
         }
 
-        public void onBindRecipeViewHolder(Recipe recipe) {
+        public void onBindRecipeViewHolder(final Recipe recipe) {
             recipeTitle.setText(recipe.getTitle());
             elementList = mRecipeElementLab.getRecipeElements(recipe.getId().toString());
 
@@ -99,7 +103,7 @@ public class BasketFragment extends Fragment {
                 anotherElementLL.setId(View.generateViewId());
 
                 container.addView(anotherElementLL);
-                
+
                 elemName.setText(elem.getName() + " / " + elem.getCount());
 
                 CheckBox checkBox = (CheckBox) anotherElementLL.findViewById(R.id.basket_fragment_card_view_layout_check_box);
@@ -121,6 +125,13 @@ public class BasketFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     removeCardFromBasket(getAdapterPosition());
+                }
+            });
+
+            shareButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    shareBasketSet(recipe);
                 }
             });
 
@@ -157,7 +168,7 @@ public class BasketFragment extends Fragment {
         }
     }
 
-    private  void removeCardFromBasket(int position) {
+    private void removeCardFromBasket(int position) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.remove("Parent:" + mRecipes.get(position).getId().toString());
         editor.apply();
@@ -177,5 +188,20 @@ public class BasketFragment extends Fragment {
             mRecyclerView.setVisibility(View.VISIBLE);
             mEmptyTextView.setVisibility(View.GONE);
         }
+    }
+
+    private void shareBasketSet(Recipe recipe) {
+        //todo unhardoce
+        StringBuilder sbMessage = new StringBuilder("Ингридиенты для рецепта: " + recipe.getTitle() + "\n");
+
+        for (RecipeElement elem: mRecipeElementLab.getRecipeElements(recipe.getId().toString()))
+            sbMessage.append(elem.getName() + " / " + elem.getCount() + "\n");
+
+        Intent share = ShareCompat.IntentBuilder.from(getActivity())
+                .setType("text/plain")
+                .setText(sbMessage)
+                .getIntent();
+
+        startActivity(share);
     }
 }

@@ -269,19 +269,6 @@ public class KitchenFragment extends Fragment{
         return view;
     }
 
-    //todo delete? need test
-    private void setClickableRemoveImageButton() {
-        //todo need change enabled style
-        if (mLinearLayoutContainerElements.getChildCount() == 1) {
-            mImageButtonRemoveElement.setClickable(false);
-            mImageButtonRemoveElement.setEnabled(false);
-        }
-        else {
-            mImageButtonRemoveElement.setClickable(true);
-            mImageButtonRemoveElement.setEnabled(true);
-        }
-    }
-    //todo test
     private void setClickableRemoveImageButton(LinearLayout linearLayout, ImageButton button) {
         if (linearLayout.getChildCount() == 1) {
             button.setClickable(false);
@@ -293,7 +280,6 @@ public class KitchenFragment extends Fragment{
         }
     }
 
-    //todo
     private <T extends RecipeChild> void updateArrayOfChilds(T element, ArrayList<T> array) {
         if (!array.contains(element)) {
             element.setParentRecipeUUID(mRecipe.getId().toString());

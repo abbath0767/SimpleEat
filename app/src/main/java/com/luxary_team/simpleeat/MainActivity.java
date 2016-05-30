@@ -142,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
                 fragment = new KitchenFragment();
                 break;
             case 2:
-                //todo add BucketFragemnt
                 fragment = new BasketFragment();
                 break;
             case 3:
@@ -216,16 +215,15 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
         mDrawerToggle.syncState();
     }
 
-    //todo unprofit
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        CharSequence title = mDrawerLayout.isDrawerOpen(Gravity.LEFT) ? myDrawerTitle: myTittle;
-        outState.putCharSequence("title", title);
-        if (getSupportActionBar().getSubtitle() != null) {
-            outState.putCharSequence("subtitle", getSupportActionBar().getSubtitle());
-        }
-    }
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        CharSequence title = mDrawerLayout.isDrawerOpen(Gravity.LEFT) ? myDrawerTitle: myTittle;
+//        outState.putCharSequence("title", title);
+//        if (getSupportActionBar().getSubtitle() != null) {
+//            outState.putCharSequence("subtitle", getSupportActionBar().getSubtitle());
+//        }
+//    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

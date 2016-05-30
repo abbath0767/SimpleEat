@@ -85,13 +85,10 @@ public class RecipeFragment extends Fragment {
         mAddToBacketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo need DateBase (change SQLHelper, Table, CursorWrapper) ???
-                //todo we now hawe a Elements TABLE! MF
                 SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("Parent:" + mRecipe.getId().toString(), mRecipe.getTitle());
                 editor.apply();
-                //todo unhardcode
                 Toast.makeText(getActivity(), "Ingridients add to basket", Toast.LENGTH_SHORT).show();
             }
         });

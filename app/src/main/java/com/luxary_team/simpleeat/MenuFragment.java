@@ -39,7 +39,6 @@ public class MenuFragment extends ListFragment {
             @Override
             public void onClick(View v) {
                 mCallback.selectItemInDrawer(1);
-                //todo tested
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, new KitchenFragment()).commit();
@@ -79,7 +78,7 @@ public class MenuFragment extends ListFragment {
 
     }
 
-    //todo work, need test
+    //todo make logic
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         MenuItem searchItem = menu.findItem(R.id.search_view);
