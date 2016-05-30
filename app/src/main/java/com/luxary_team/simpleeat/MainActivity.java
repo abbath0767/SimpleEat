@@ -177,8 +177,6 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
             return true;
         // Handle action bar actions click
         switch (item.getItemId()) {
-            case R.id.search_view:
-                return false;
             case android.R.id.home:
                 getFragmentManager().popBackStackImmediate();
                 return true;
@@ -192,6 +190,16 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
         // if navigation drawer is opened, hide the action items
 //        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 //        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+        String fragmentName = getFragmentManager().findFragmentById(R.id.content_frame).getClass().getSimpleName();
+
+        Log.d(TAG, "Prepare Options Menu in " + fragmentName);
+
+        if (fragmentName.equals(MenuFragment.class.getSimpleName()) ||
+                fragmentName.equals(RecipeListFragment.class.getSimpleName())) {
+            menu.findItem(R.id.search_view).setVisible(true);
+        } else {
+            menu.findItem(R.id.search_view).setVisible(false);
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -208,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
         mDrawerToggle.syncState();
     }
 
+    //todo unprofit
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -228,7 +237,6 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
     private void syncActionBarArrowState() {
         int backStackEntryCount =
                 getFragmentManager().getBackStackEntryCount();
-        Log.d(MainActivity.TAG, "count " + getSupportFragmentManager().getBackStackEntryCount());
         mDrawerToggle.setDrawerIndicatorEnabled(backStackEntryCount == 0);
         if (backStackEntryCount == 0) {
             getSupportActionBar().setSubtitle("");
@@ -239,5 +247,17 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
         mDrawerList.setItemChecked(value, true);
         mDrawerList.setSelection(value);
         setTitle(viewNames[value]);
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        } else if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

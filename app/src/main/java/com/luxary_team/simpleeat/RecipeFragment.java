@@ -171,11 +171,16 @@ public class RecipeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
         menu.add(0, DELETE_BUTTON_ID, 0, R.string.delete_button)
                 .setIcon(R.drawable.ic_delete_recipe_button)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -193,5 +198,4 @@ public class RecipeFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }
