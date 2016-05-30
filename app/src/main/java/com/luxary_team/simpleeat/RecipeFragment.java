@@ -90,7 +90,7 @@ public class RecipeFragment extends Fragment {
                 SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("Parent:" + mRecipe.getId().toString(), mRecipe.getTitle());
-                editor.commit();
+                editor.apply();
                 //todo unhardcode
                 Toast.makeText(getActivity(), "Ingridients add to basket", Toast.LENGTH_SHORT).show();
             }
@@ -135,7 +135,7 @@ public class RecipeFragment extends Fragment {
             }
         }
 
-        Log.d(MainActivity.TAG, "recipeSteps cpunt = " + mRecipeSteps.size());
+        Log.d(MainActivity.TAG, "recipeSteps count = " + mRecipeSteps.size());
 
         if (mRecipeSteps.size() != 0) {
 

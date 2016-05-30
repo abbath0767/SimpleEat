@@ -9,12 +9,12 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,8 +32,11 @@ public class BasketFragment extends Fragment {
 
     private ArrayList<Recipe> mRecipes;
     private RecipeLab mRecipeLab;
+    private RecipeElementLab mRecipeElementLab;
+    private SharedPreferences preferences;
 
     private RecyclerView mRecyclerView;
+    private TextView mEmptyTextView;
     private RecipeAdapter mRecipeAdapter;
 
     @Override
@@ -41,18 +44,16 @@ public class BasketFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mRecipes = new ArrayList<>();
 
-        SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         mRecipeLab = RecipeLab.get(getActivity());
+        mRecipeElementLab = RecipeElementLab.get(getActivity());
 
         for (Map.Entry<String, ?> iter : preferences.getAll().entrySet())
             if (iter.getKey().substring(0, 6).equals("Parent"))
                 mRecipes.add(mRecipeLab.getRecipe(UUID.fromString(
                         iter.getKey().substring(7, iter.getKey().length()))));
 
-        Log.d(MainActivity.TAG, "all Recipes: " + mRecipes);
-
         mRecipeAdapter = new RecipeAdapter(mRecipes);
-
     }
 
     @Override
@@ -63,6 +64,10 @@ public class BasketFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mRecipeAdapter);
 
+        mEmptyTextView = (TextView) rootView.findViewById(R.id.basket_fragment_empty_text_view);
+
+        notifyEmptyView();
+
         return rootView;
     }
 
@@ -71,28 +76,30 @@ public class BasketFragment extends Fragment {
         private TextView recipeTitle;
         private LinearLayout container;
         private ArrayList<RecipeElement> elementList;
+        private ImageButton deleteButton;
 
         public RecipeViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.basket_fragment_card_view);
             recipeTitle = (TextView) itemView.findViewById(R.id.basket_fragment_card_view_text_view_title);
-            container = (LinearLayout) itemView.findViewById(R.id.bastet_card_view_element_container);
+            container = (LinearLayout) itemView.findViewById(R.id.basket_card_view_element_container);
+            deleteButton = (ImageButton) itemView.findViewById(R.id.basket_card_view_delete_button);
         }
 
         public void onBindRecipeViewHolder(Recipe recipe) {
             recipeTitle.setText(recipe.getTitle());
-            elementList = RecipeElementLab.get(getActivity()).getRecipeElements(recipe.getId().toString());
-
-            Log.d(MainActivity.TAG, "elements = " + elementList);
+            elementList = mRecipeElementLab.getRecipeElements(recipe.getId().toString());
 
             for (RecipeElement elem : elementList) {
+
                 LinearLayout anotherElementLL = (LinearLayout) LayoutInflater.from(getActivity())
                         .inflate(R.layout.basket_card_view_element_item, null);
+                final TextView elemName = (TextView) anotherElementLL.findViewById(R.id.basket_fragment_card_view_layout_text_view_ingr_name);
+
                 anotherElementLL.setId(View.generateViewId());
 
                 container.addView(anotherElementLL);
-
-                final TextView elemName = (TextView) anotherElementLL.findViewById(R.id.basket_fragment_card_view_layout_text_view_ingr_name);
+                
                 elemName.setText(elem.getName() + " / " + elem.getCount());
 
                 CheckBox checkBox = (CheckBox) anotherElementLL.findViewById(R.id.basket_fragment_card_view_layout_check_box);
@@ -109,6 +116,14 @@ public class BasketFragment extends Fragment {
                     }
                 });
             }
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeCardFromBasket(getAdapterPosition());
+                }
+            });
+
         }
     }
 
@@ -139,6 +154,28 @@ public class BasketFragment extends Fragment {
 
         public void setRecipes(ArrayList<Recipe> recipes) {
             this.recipes = recipes;
+        }
+    }
+
+    private  void removeCardFromBasket(int position) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove("Parent:" + mRecipes.get(position).getId().toString());
+        editor.apply();
+
+        mRecipeAdapter.recipes.remove(position);
+        mRecipeAdapter.notifyItemRemoved(position);
+        mRecipeAdapter.notifyItemRangeChanged(position, mRecipeAdapter.recipes.size());
+
+        notifyEmptyView();
+    }
+
+    private void notifyEmptyView() {
+        if (mRecipes.isEmpty()) {
+            mRecyclerView.setVisibility(View.GONE);
+            mEmptyTextView.setVisibility(View.VISIBLE);
+        } else {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyTextView.setVisibility(View.GONE);
         }
     }
 }

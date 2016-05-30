@@ -54,7 +54,7 @@ public class RecipeListFragment extends ListFragment {
                 mRecipes);
         setListAdapter(adapter);
 
-        setRetainInstance(true);
+//        setRetainInstance(true);
 //        setHasOptionsMenu(true);
     }
 

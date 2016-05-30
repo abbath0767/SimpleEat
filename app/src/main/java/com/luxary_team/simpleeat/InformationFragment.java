@@ -45,11 +45,6 @@ public class InformationFragment extends Fragment {
                         .setEmailTo(new String[]{getString(R.string.send_my_email)})
                         .createChooserIntent();
 
-                //// new Intent(Intent.ACTION_SEND);
-//                shareIntent.setType("text/rfc822");
-//                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Отзыв о приложении");
-//                shareIntent.putExtra(Intent.EXTRA_TEXT, body);
-//                shareIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"ng@redmadrobot.com"});
                 startActivity(shareIntent);
             }
         });
@@ -61,11 +56,10 @@ public class InformationFragment extends Fragment {
         String version;
         String deviceName = Build.MODEL;
         String osVersion = String.format("%s (SDK %s)", Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
-//        Build.VERSION.RELEASE + " (SDK " + Build.VERSION.SDK_INT + ")";
         try {
             version = String.valueOf(getActivity().getPackageManager()
                     .getPackageInfo(getActivity().getPackageName(), 0)
-                    .versionCode);
+                    .versionName);
         } catch (PackageManager.NameNotFoundException e) {
             version = "null";
             Log.d(MainActivity.TAG, "Error in get version");

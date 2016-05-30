@@ -177,8 +177,8 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
             return true;
         // Handle action bar actions click
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
+            case R.id.search_view:
+                return false;
             case android.R.id.home:
                 getFragmentManager().popBackStackImmediate();
                 return true;
@@ -190,8 +190,8 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // if navigation drawer is opened, hide the action items
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+//        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+//        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 

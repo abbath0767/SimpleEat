@@ -23,7 +23,7 @@
             android:textStyle="bold"/>
 
         <LinearLayout
-            android:id="@+id/bastet_card_view_element_container"
+            android:id="@+id/basket_card_view_element_container"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,6 +31,15 @@
             android:layout_alignStart="@+id/basket_fragment_card_view_text_view_title">
 
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/basket_card_view_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete_basket"
+            android:background="@null"
+            android:layout_below="@+id/basket_card_view_element_container"
+            android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
 

@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="horizontal">
+
     <TextView
         android:id="@+id/basket_fragment_card_view_layout_text_view_ingr_name"
         android:layout_width="0dp"
-        android:layout_weight="5"
-        android:textColor="@android:color/black"
         android:layout_height="wrap_content"
-        android:text="hardcode text"/>
+        android:layout_weight="5"
+        android:text="hardcode text"
+        android:textColor="@android:color/black"/>
 
     <CheckBox
         android:id="@+id/basket_fragment_card_view_layout_check_box"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"/>
 
 </LinearLayout>

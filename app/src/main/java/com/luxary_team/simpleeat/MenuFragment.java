@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,8 @@ public class MenuFragment extends ListFragment {
     private ArrayList<Recipe.RecipeType> mUsedRecipeTypes = new ArrayList<>();
     private Button mButton;
     private SelectItemDrawerCallback mCallback;
+    private SearchView searchView = null;
+    private SearchView.OnQueryTextListener queryTextListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,9 +64,10 @@ public class MenuFragment extends ListFragment {
 
         setListAdapter(adapter);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.menu);
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu);
+//        setHasOptionsMenu(true);
 
     }
 
@@ -80,6 +84,53 @@ public class MenuFragment extends ListFragment {
                 .commit();
 
     }
+
+//    //todo need debug
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        Log.d(MainActivity.TAG, "create menu in fragmnt ");
+//
+//        inflater.inflate(R.menu.menu_menu, menu);
+//        MenuItem searchItem = menu.findItem(R.id.search_view);
+//        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+//
+//        if (searchItem != null)
+//            searchView = (SearchView) searchItem.getActionView();
+//
+//        if (searchView != null) {
+//            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+//            queryTextListener = new SearchView.OnQueryTextListener() {
+//                @Override
+//                public boolean onQueryTextSubmit(String query) {
+//                    Log.d(MainActivity.TAG, "query on TextSubmit: " + query);
+//                    return true;
+//                }
+//                @Override
+//                public boolean onQueryTextChange(String newText) {
+//                    Log.d(MainActivity.TAG, "query on TextChange: " + newText);
+//                    return true;
+//                }
+//            };
+//            searchView.setOnQueryTextListener(queryTextListener);
+//        }
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.search_view:
+//                // Not implemented here
+//                return false;
+//            case android.R.id.home:
+//                getFragmentManager().popBackStackImmediate();
+//                return true;
+//            default:
+//                break;
+//        }
+//        searchView.setOnQueryTextListener(queryTextListener);
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private void calculateRecipeType() {
         for (Recipe recipe: mRecipes) {
