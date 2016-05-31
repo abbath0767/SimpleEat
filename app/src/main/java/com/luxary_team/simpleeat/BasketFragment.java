@@ -200,7 +200,8 @@ public class BasketFragment extends Fragment {
         Intent share = ShareCompat.IntentBuilder.from(getActivity())
                 .setType("text/plain")
                 .setText(sbMessage)
-                .getIntent();
+                .setChooserTitle("Send from ... ") //todo <unhardcode this
+                .createChooserIntent();
 
         startActivity(share);
     }

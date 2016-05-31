@@ -1,8 +1,13 @@
 package com.luxary_team.simpleeat;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.luxary_team.simpleeat.Utils.Utility;
 import com.luxary_team.simpleeat.interfaces.SelectItemDrawerCallback;
 import com.luxary_team.simpleeat.objects.Recipe;
 import com.luxary_team.simpleeat.objects.RecipeChild;
@@ -31,8 +37,10 @@ import com.luxary_team.simpleeat.objects.RecipeStepLab;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class KitchenFragment extends Fragment{
+public class KitchenFragment extends Fragment {
 
+    private static final int REQUEST_CAMERA = 3;
+    private static final int REQUEST_SELECT_FILE = 4;
     private EditText mTitleEditText;
     private Spinner mTypeSpinner;
     private Button mAddRecipeButton;
@@ -42,6 +50,7 @@ public class KitchenFragment extends Fragment{
     private ImageButton mImageButtonRemoveElement;
     private ImageButton mImageButtonAddStep;
     private ImageButton mImageButtonRemoveStep;
+    private ImageButton mImageButtonTakePhoto;
 
     private RecipeLab mRecipeLab;
     private RecipeElementLab mRecipeElementLab;
@@ -52,6 +61,8 @@ public class KitchenFragment extends Fragment{
     private ArrayList<RecipeElement> mRecipeElements;
     private ArrayList<RecipeStep> mRecipeSteps;
     private SelectItemDrawerCallback mCallback;
+
+    private String userChoosen = "";
 
     private int stepCount = 1;
 //    private String[] recipeTypes;
@@ -123,7 +134,7 @@ public class KitchenFragment extends Fragment{
                 mRecipeLab.addRecipe(mRecipe);
 
                 Log.d(MainActivity.TAG, "mRecipeSTeps length = " + mRecipeSteps.size());
-                for (RecipeStep step: mRecipeSteps)
+                for (RecipeStep step : mRecipeSteps)
                     Log.d(MainActivity.TAG, "step: " + step);
 
                 mRecipeStepLab.setAndSaveRecipeSteps(mRecipeSteps);
@@ -217,7 +228,7 @@ public class KitchenFragment extends Fragment{
                 final RecipeStep step = new RecipeStep();
 
                 LinearLayout anotherLL = (LinearLayout) LayoutInflater.from(getActivity())
-                                    .inflate(R.layout.list_item_recipe_step_new, null);
+                        .inflate(R.layout.list_item_recipe_step_new, null);
                 anotherLL.setId(View.generateViewId());
 
                 mLinearLayoutContainerSteps.addView(anotherLL, mLinearLayoutContainerSteps.getChildCount() - 1);
@@ -265,16 +276,81 @@ public class KitchenFragment extends Fragment{
             }
         });
 
+        mImageButtonTakePhoto = (ImageButton) view.findViewById(R.id.kitchen_photo_take_button);
+        mImageButtonTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
+
 
         return view;
+    }
+
+    private void selectImage() {
+        final String[] mAnswers = getResources().getStringArray(R.array.photo_answer);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle("Добавить фото рецепта") //todo unhardcode
+                .setItems(R.array.photo_answer, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        boolean perm = Utility.checkPermission(getActivity()); //todo make this
+                        switch (which) {
+                            case 0:
+                                userChoosen = mAnswers[which];
+                                if (perm)
+                                    cameraIntent();
+                                break;
+                            case 1:
+                                userChoosen = mAnswers[which];
+                                if (perm)
+                                    galleryIntent();
+                                break;
+                            case 2:
+                                dialog.dismiss();
+                        }
+                    }
+                });
+
+        builder.show();
+
+    }
+
+    private void cameraIntent() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_CAMERA);
+    }
+
+    private void galleryIntent() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        //todo unhardcode
+        startActivityForResult(intent.createChooser(intent, "Выберите файл"), REQUEST_SELECT_FILE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (userChoosen.equals(getResources().getStringArray(R.array.photo_answer)[0]))
+                        cameraIntent();
+                    else if (userChoosen.equals(getResources().getStringArray(R.array.photo_answer)[0]))
+                        galleryIntent();
+                } else {
+                    Toast.makeText(getActivity(), "oops, =( permission denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 
     private void setClickableRemoveImageButton(LinearLayout linearLayout, ImageButton button) {
         if (linearLayout.getChildCount() == 1) {
             button.setClickable(false);
             button.setEnabled(false);
-        }
-        else {
+        } else {
             button.setClickable(true);
             button.setEnabled(true);
         }
