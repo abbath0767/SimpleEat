@@ -10,6 +10,12 @@
         android:orientation="vertical">
 
 
+        <ImageView
+            android:id="@+id/recipe_photo_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:background="@android:color/darker_gray"/>
+
         <TextView
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"

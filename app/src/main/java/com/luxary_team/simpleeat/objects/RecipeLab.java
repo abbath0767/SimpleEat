@@ -4,11 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 
 import com.luxary_team.simpleeat.database.RecipeCursorWrapper;
 import com.luxary_team.simpleeat.database.RecipeDBHelper;
 import com.luxary_team.simpleeat.database.RecipeDBShema.RecipeTable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -100,5 +102,13 @@ public class RecipeLab {
         return content;
     }
 
+    public File getPhotoFile(Recipe recipe) {
+        File extfile = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        if (extfile == null)
+            return null;
+
+        return new File(extfile, recipe.getPhotoFileName());
+    }
 
 }

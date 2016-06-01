@@ -8,6 +8,10 @@ public class Recipe {
     private RecipeType mType;
     private boolean favorite;
 
+    public String getPhotoFileName() {
+        return "IMG_" + getId().toString() + ".jpg";
+    }
+
     public Recipe() {
         this.mId = UUID.randomUUID();
     }

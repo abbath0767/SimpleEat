@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.luxary_team.simpleeat.objects.RecipeElementLab;
 import com.luxary_team.simpleeat.objects.RecipeLab;
 import com.luxary_team.simpleeat.objects.RecipeStep;
 import com.luxary_team.simpleeat.objects.RecipeStepLab;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -38,6 +40,7 @@ public class RecipeFragment extends Fragment {
     private Button mAddToBacketButton;
     private LinearLayout mLinearLayoutRecipeElements;
     private LinearLayout mLinearLayoutRecipeSteps;
+    private ImageView mImageViewPhoto;
 
     private Recipe mRecipe;
     private ArrayList<RecipeElement> mRecipeElements;
@@ -92,6 +95,16 @@ public class RecipeFragment extends Fragment {
                 Toast.makeText(getActivity(), "Ingridients add to basket", Toast.LENGTH_SHORT).show();
             }
         });
+
+        mImageViewPhoto = (ImageView) rootView.findViewById(R.id.recipe_photo_image_view);
+        mImageViewPhoto.setBackgroundColor(rootView.getDrawingCacheBackgroundColor());
+        Picasso.with(getActivity()).load(RecipeLab.get(getActivity()).getPhotoFile(mRecipe)).into(mImageViewPhoto);
+
+        if (RecipeLab.get(getActivity()).getPhotoFile(mRecipe).length() == 0) {
+            mImageViewPhoto.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
+            mImageViewPhoto.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+        }
 
         return rootView;
     }

@@ -1,11 +1,16 @@
 package com.luxary_team.simpleeat;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -19,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,7 +39,13 @@ import com.luxary_team.simpleeat.objects.RecipeElementLab;
 import com.luxary_team.simpleeat.objects.RecipeLab;
 import com.luxary_team.simpleeat.objects.RecipeStep;
 import com.luxary_team.simpleeat.objects.RecipeStepLab;
+import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -51,6 +63,7 @@ public class KitchenFragment extends Fragment {
     private ImageButton mImageButtonAddStep;
     private ImageButton mImageButtonRemoveStep;
     private ImageButton mImageButtonTakePhoto;
+    private ImageView mImageViewPhoto;
 
     private RecipeLab mRecipeLab;
     private RecipeElementLab mRecipeElementLab;
@@ -63,6 +76,8 @@ public class KitchenFragment extends Fragment {
     private SelectItemDrawerCallback mCallback;
 
     private String userChoosen = "";
+    private File mPhotoFile;
+    private Intent captureImageIntent;
 
     private int stepCount = 1;
 //    private String[] recipeTypes;
@@ -80,12 +95,15 @@ public class KitchenFragment extends Fragment {
         mRecipeElements = new ArrayList<>();
         mRecipeSteps = new ArrayList<>();
 
+
         mCallback = (SelectItemDrawerCallback) getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.kitchen_fragment, container, false);
+
+        PackageManager packageManager = getActivity().getPackageManager();
 
         //remove last element
         recipeTypesWithoutFavorite = Recipe.RecipeType.values();
@@ -284,6 +302,7 @@ public class KitchenFragment extends Fragment {
             }
         });
 
+        mImageViewPhoto = (ImageView) view.findViewById(R.id.kitchen_photo_image_view);
 
         return view;
     }
@@ -325,9 +344,84 @@ public class KitchenFragment extends Fragment {
     private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
+//        captureImageIntent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        //todo unhardcode
-        startActivityForResult(intent.createChooser(intent, "Выберите файл"), REQUEST_SELECT_FILE);
+//        captureImageIntent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent.createChooser(intent, "Выберите файл"),
+                REQUEST_SELECT_FILE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_CAMERA) {
+                onCaptureImageResult(data);
+            } else if (requestCode == REQUEST_SELECT_FILE) {
+                onSelectFromGalleryResult(data);
+            }
+        }
+    }
+
+    private void onSelectFromGalleryResult(Intent data) {
+        Bitmap bm = null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        mImageViewPhoto.setImageBitmap(bm);
+    }
+
+    private void onCaptureImageResult(Intent data) {
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        thumbnail = rotateThumbnail(thumbnail);
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        File destination = mRecipeLab.getPhotoFile(mRecipe);//new File(Environment.getExternalStorageDirectory(),
+                                                            //                System.currentTimeMillis() + ".jpg");
+        FileOutputStream fo;
+        try {
+            destination.createNewFile();
+            fo = new FileOutputStream(destination);
+            fo.write(bytes.toByteArray());
+            fo.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        mImageViewPhoto.setImageBitmap(thumbnail);
+        Picasso.with(getActivity()).load(destination).into(mImageViewPhoto);
+        mImageViewPhoto.setBackgroundColor(Color.WHITE);
+    }
+
+    //todo need debug
+    private Bitmap rotateThumbnail(Bitmap thumb) {
+//        File curFile = new File("path-to-file"); // ... This is an image file from my device.
+        Bitmap rotatedBitmap = null;
+
+        try {
+            ExifInterface exif = new ExifInterface(mPhotoFile.getPath());
+            int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            int rotationInDegrees = exifToDegrees(rotation);
+            Matrix matrix = new Matrix();
+            if (rotation != 0f) {matrix.preRotate(rotationInDegrees);}
+            rotatedBitmap = Bitmap.createBitmap(thumb,0,0, thumb.getWidth(), thumb.getHeight(), matrix, true);
+
+        }catch(IOException ignored){
+        }
+
+        return rotatedBitmap;
+    }
+
+    private static int exifToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) { return 90; }
+        else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {  return 180; }
+        else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {  return 270; }
+        return 0;
     }
 
     @Override

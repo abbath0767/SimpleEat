@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
 //        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
         String fragmentName = getFragmentManager().findFragmentById(R.id.content_frame).getClass().getSimpleName();
 
-        Log.d(TAG, "Prepare Options Menu in " + fragmentName);
+//        Log.d(TAG, "Prepare Options Menu in " + fragmentName);
 
         if (fragmentName.equals(MenuFragment.class.getSimpleName()) ||
                 fragmentName.equals(RecipeListFragment.class.getSimpleName())) {
