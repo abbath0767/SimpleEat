@@ -50,7 +50,8 @@ public class Recipe {
     }
 
     public enum RecipeType{
-        //todo vaforite must be last element!!! always
+        //vaforite must be last element!!! always
+        //sync with string res
         SOUP ("Супы"),
         SECOND ("Второе"),
         SIMPLE ("Простой рецепт"),

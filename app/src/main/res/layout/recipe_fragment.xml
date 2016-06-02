@@ -9,6 +9,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/recipe_photo_title"/>
 
         <ImageView
             android:id="@+id/recipe_photo_image_view"

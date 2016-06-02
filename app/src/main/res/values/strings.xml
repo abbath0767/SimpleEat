@@ -23,7 +23,7 @@
     <string name="step_number">Шаг №%d</string>
     <string name="step_hint">Описание шага</string>
     <string name="kitchen_add_recipe_button_title">Добавить рецепт</string>
-    <string name="is_favorite">Favorite!</string>
+    <string name="is_favorite">Избранное!</string>
     <string name="delete_button">Удалить</string>
     <string name="recipe_type_title">Тип</string>
     <string name="elements">Ингридиенты</string>
@@ -41,6 +41,7 @@
     <string name="information_title_features_new">В ближайшем будущем будет реализовано:\n1. Добавление фото для рецептов и шагов
         \n2. Таймер для шагов\n3. Редизайн =)</string>
 
+    <!--sync with enum-->
     <string-array name="recipe_type_array">
         <item>Супы</item>
         <item>Второе</item>
@@ -53,5 +54,6 @@
     <string name="send_device_info">\n\nВерсия приложения: %1$s\nУстройство: %2$s\nВерсия ОС: Android %3$s</string>
     <string name="send_my_vk">http://vk.com/abbath</string>
     <string name="empty_basket">У вас нет отмеченных ингридиентов</string>
+    <string name="recipe_photo_title">Фотография</string>
 
 </resources>

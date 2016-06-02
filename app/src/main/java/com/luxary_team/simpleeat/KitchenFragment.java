@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -30,7 +28,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.luxary_team.simpleeat.Utils.Utility;
+import com.luxary_team.simpleeat.Utils.PermissionRequester;
+import com.luxary_team.simpleeat.Utils.PhotoWorker;
+import com.luxary_team.simpleeat.Utils.ThumbnailRotator;
 import com.luxary_team.simpleeat.interfaces.SelectItemDrawerCallback;
 import com.luxary_team.simpleeat.objects.Recipe;
 import com.luxary_team.simpleeat.objects.RecipeChild;
@@ -39,20 +39,18 @@ import com.luxary_team.simpleeat.objects.RecipeElementLab;
 import com.luxary_team.simpleeat.objects.RecipeLab;
 import com.luxary_team.simpleeat.objects.RecipeStep;
 import com.luxary_team.simpleeat.objects.RecipeStepLab;
-import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class KitchenFragment extends Fragment {
 
     private static final int REQUEST_CAMERA = 3;
     private static final int REQUEST_SELECT_FILE = 4;
+
     private EditText mTitleEditText;
     private Spinner mTypeSpinner;
     private Button mAddRecipeButton;
@@ -86,6 +84,7 @@ public class KitchenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         setHasOptionsMenu(false);
         mRecipe = new Recipe();
         Log.d(MainActivity.TAG, "new recipe created, uuid = " + mRecipe.getId().toString());
@@ -94,7 +93,7 @@ public class KitchenFragment extends Fragment {
         mRecipeStepLab = RecipeStepLab.get(getActivity());
         mRecipeElements = new ArrayList<>();
         mRecipeSteps = new ArrayList<>();
-
+        mPhotoFile = mRecipeLab.getPhotoFile(mRecipe);
 
         mCallback = (SelectItemDrawerCallback) getActivity();
     }
@@ -314,7 +313,7 @@ public class KitchenFragment extends Fragment {
                 .setItems(R.array.photo_answer, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        boolean perm = Utility.checkPermission(getActivity()); //todo make this
+                        boolean perm = PermissionRequester.checkPermission(getActivity()); //todo make this
                         switch (which) {
                             case 0:
                                 userChoosen = mAnswers[which];
@@ -333,7 +332,6 @@ public class KitchenFragment extends Fragment {
                 });
 
         builder.show();
-
     }
 
     private void cameraIntent() {
@@ -344,9 +342,8 @@ public class KitchenFragment extends Fragment {
     private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
-//        captureImageIntent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-//        captureImageIntent.setAction(Intent.ACTION_GET_CONTENT);
+        //todo unhardcode
         startActivityForResult(intent.createChooser(intent, "Выберите файл"),
                 REQUEST_SELECT_FILE);
     }
@@ -368,66 +365,31 @@ public class KitchenFragment extends Fragment {
         if (data != null) {
             try {
                 bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
+                PhotoWorker.bitmapToFile(bm, mPhotoFile);
+                bm = ThumbnailRotator.rotateThumbnail(bm, mPhotoFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        mImageViewPhoto.setImageResource(android.R.color.transparent);
         mImageViewPhoto.setImageBitmap(bm);
+        mImageViewPhoto.setBackgroundColor(Color.WHITE);
     }
 
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        thumbnail = rotateThumbnail(thumbnail);
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        File destination = mRecipeLab.getPhotoFile(mRecipe);//new File(Environment.getExternalStorageDirectory(),
-                                                            //                System.currentTimeMillis() + ".jpg");
-        FileOutputStream fo;
-        try {
-            destination.createNewFile();
-            fo = new FileOutputStream(destination);
-            fo.write(bytes.toByteArray());
-            fo.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        mImageViewPhoto.setImageBitmap(thumbnail);
-        Picasso.with(getActivity()).load(destination).into(mImageViewPhoto);
+
+        PhotoWorker.bitmapToFile(thumbnail, mPhotoFile);
+
+        mImageViewPhoto.setImageResource(android.R.color.transparent);
+        mImageViewPhoto.setImageBitmap(thumbnail);
         mImageViewPhoto.setBackgroundColor(Color.WHITE);
-    }
-
-    //todo need debug
-    private Bitmap rotateThumbnail(Bitmap thumb) {
-//        File curFile = new File("path-to-file"); // ... This is an image file from my device.
-        Bitmap rotatedBitmap = null;
-
-        try {
-            ExifInterface exif = new ExifInterface(mPhotoFile.getPath());
-            int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-            int rotationInDegrees = exifToDegrees(rotation);
-            Matrix matrix = new Matrix();
-            if (rotation != 0f) {matrix.preRotate(rotationInDegrees);}
-            rotatedBitmap = Bitmap.createBitmap(thumb,0,0, thumb.getWidth(), thumb.getHeight(), matrix, true);
-
-        }catch(IOException ignored){
-        }
-
-        return rotatedBitmap;
-    }
-
-    private static int exifToDegrees(int exifOrientation) {
-        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) { return 90; }
-        else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {  return 180; }
-        else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {  return 270; }
-        return 0;
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
-            case Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+            case PermissionRequester.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (userChoosen.equals(getResources().getStringArray(R.array.photo_answer)[0]))
                         cameraIntent();
