@@ -17,6 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.luxary_team.simpleeat.interfaces.SelectItemDrawerCallback;
+import com.luxary_team.simpleeat.objects.Recipe;
+import com.luxary_team.simpleeat.ui.KitchenStep1Fragment;
 
 public class MainActivity extends AppCompatActivity implements SelectItemDrawerCallback {
     public static final String TAG = "myLogTag";
@@ -139,7 +141,9 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
                 fragment = new MenuFragment();
                 break;
             case 1:
-                fragment = new KitchenFragment();
+//                fragment = new KitchenFragment();
+                fragment = KitchenStep1Fragment.newInstance(new Recipe().getId().toString());
+                Log.d(MainActivity.TAG, "create new recipe");
                 break;
             case 2:
                 fragment = new BasketFragment();

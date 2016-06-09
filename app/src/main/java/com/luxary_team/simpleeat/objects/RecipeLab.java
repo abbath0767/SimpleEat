@@ -32,6 +32,10 @@ public class RecipeLab {
         return sRecipeLab;
     }
 
+    public static Recipe getNewRecipe(String recipeUUID) {
+        return new Recipe(UUID.fromString(recipeUUID));
+    }
+
     public void addRecipe(Recipe recipe) {
         ContentValues content = getContentValues(recipe);
 

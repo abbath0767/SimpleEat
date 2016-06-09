@@ -84,7 +84,6 @@ public class KitchenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setHasOptionsMenu(false);
         mRecipe = new Recipe();
         Log.d(MainActivity.TAG, "new recipe created, uuid = " + mRecipe.getId().toString());
@@ -101,8 +100,6 @@ public class KitchenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.kitchen_fragment, container, false);
-
-        PackageManager packageManager = getActivity().getPackageManager();
 
         //remove last element
         recipeTypesWithoutFavorite = Recipe.RecipeType.values();

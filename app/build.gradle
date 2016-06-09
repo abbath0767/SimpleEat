@@ -7,7 +7,7 @@ android {
         applicationId "com.luxary_team.simpleeat"
         minSdkVersion 19
         targetSdkVersion 23
-        versionName "0.3"
+        versionName "0.5"
         versionCode 1
     }
     buildTypes {

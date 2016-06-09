@@ -35,10 +35,11 @@
     </string-array>
 
     <string name="information_title">Simple Eat v0.3</string>
-    <string name="information_title_app">Данное приложение позволяет создавать свои рецепты для их использования в будуем
+    <string name="information_title_app">Данное приложение позволяет создавать свои рецепты для их использования в будущем
         сортировать их по спискам, удобным для отображения.</string>
-    <string name="information_title_features">Реализованные фичи:\n1. Создание и просмотр рецепта с шагами, ингридиентами\n2. Сортировка по типам</string>
-    <string name="information_title_features_new">В ближайшем будущем будет реализовано:\n1. Добавление фото для рецептов и шагов
+    <string name="information_title_features">Реализованные фичи:\n1. Создание и просмотр рецепта с
+        шагами, ингридиентами\n2. Сортировка по типам\n3. Фотографии рецептов\n4. Корзина</string>
+    <string name="information_title_features_new">В ближайшем будущем будет реализовано:\n1. Более удобный конструктор шагов
         \n2. Таймер для шагов\n3. Редизайн =)</string>
 
     <!--sync with enum-->
@@ -46,6 +47,8 @@
         <item>Супы</item>
         <item>Второе</item>
         <item>Простой рецепт</item>
+        <item>Напитки</item>
+        <item>Салат</item>
     </string-array>
 
     <string name="send_subject">Отзыв о приложении Simple Eat</string>

@@ -55,6 +55,8 @@ public class Recipe {
         SOUP ("Супы"),
         SECOND ("Второе"),
         SIMPLE ("Простой рецепт"),
+        DRINK ("Напитки"),
+        SALAT ("Салат"),
         FAVORITE ("Избранное");
 
         private final String name;

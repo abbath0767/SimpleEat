@@ -11,6 +11,7 @@ import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,10 +51,22 @@ public class BasketFragment extends Fragment {
         mRecipeLab = RecipeLab.get(getActivity());
         mRecipeElementLab = RecipeElementLab.get(getActivity());
 
+        //todo make method
         for (Map.Entry<String, ?> iter : preferences.getAll().entrySet())
-            if (iter.getKey().substring(0, 6).equals("Parent"))
-                mRecipes.add(mRecipeLab.getRecipe(UUID.fromString(
-                        iter.getKey().substring(7, iter.getKey().length()))));
+            if (iter.getKey().substring(0, 6).equals("Parent")) {
+
+                Recipe anotherRecipe = mRecipeLab.getRecipe(UUID.fromString(
+                        iter.getKey().substring(7, iter.getKey().length())));
+
+                if (anotherRecipe == null) {
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.remove("Parent:" + iter.getKey().substring(7, iter.getKey().length()));
+                    Log.d(MainActivity.TAG, "remove from prefs " + iter.getKey().substring(7, iter.getKey().length()));
+                    editor.apply();
+                } else {
+                    mRecipes.add(anotherRecipe);
+                }
+            }
 
         mRecipeAdapter = new RecipeAdapter(mRecipes);
     }
