@@ -5,6 +5,7 @@ import android.database.CursorWrapper;
 
 import com.luxary_team.simpleeat.objects.Recipe;
 import com.luxary_team.simpleeat.database.RecipeDBShema.RecipeTable;
+import com.luxary_team.simpleeat.objects.RecipeType;
 
 import java.util.UUID;
 
@@ -20,8 +21,8 @@ public class RecipeCursorWrapper extends CursorWrapper {
         int isSolved = getInt(getColumnIndex(RecipeTable.Cols.FAVORITE));
         String recipeType = getString(getColumnIndex(RecipeTable.Cols.TYPE));
 
-        Recipe.RecipeType actual = null;
-        for (Recipe.RecipeType rt: Recipe.RecipeType.values()) {
+        RecipeType actual = null;
+        for (RecipeType rt: RecipeType.values()) {
             if (recipeType.equals(rt.toString()))
                 actual = rt;
         }

@@ -142,8 +142,8 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
                 break;
             case 1:
 //                fragment = new KitchenFragment();
-                fragment = KitchenStep1Fragment.newInstance(new Recipe().getId().toString());
-                Log.d(MainActivity.TAG, "create new recipe");
+                Recipe recipe = new Recipe();
+                fragment = KitchenStep1Fragment.newInstance(recipe);
                 break;
             case 2:
                 fragment = new BasketFragment();

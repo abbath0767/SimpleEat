@@ -1,8 +1,9 @@
 package com.luxary_team.simpleeat.objects;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Recipe {
+public class Recipe implements Serializable{
     private UUID mId;
     private String mTitle;
     private RecipeType mType;
@@ -49,29 +50,4 @@ public class Recipe {
         return mTitle;
     }
 
-    public enum RecipeType{
-        //vaforite must be last element!!! always
-        //sync with string res
-        SOUP ("Супы"),
-        SECOND ("Второе"),
-        SIMPLE ("Простой рецепт"),
-        DRINK ("Напитки"),
-        SALAT ("Салат"),
-        FAVORITE ("Избранное");
-
-        private final String name;
-
-        RecipeType(String s) {
-            name = s;
-        }
-
-        public boolean equalsName(String otherName) {
-            return (otherName == null) ? false : name.equals(otherName);
-        }
-
-        public String toString() {
-            return this.name;
-        }
-
-    }
 }

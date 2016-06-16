@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.luxary_team.simpleeat.objects.Recipe;
 import com.luxary_team.simpleeat.objects.RecipeLab;
+import com.luxary_team.simpleeat.objects.RecipeType;
 
 import java.util.ArrayList;
 
@@ -20,10 +21,10 @@ public class RecipeListFragment extends ListFragment {
     //todo add lifecycle
     public static final String EXTRA_RECIPE_TYPE = "recipeType";
 
-    private Recipe.RecipeType mRecipeType;
+    private RecipeType mRecipeType;
     private ArrayList<Recipe> mRecipes;
 
-    public static ListFragment newInstance(Recipe.RecipeType recipeType) {
+    public static ListFragment newInstance(RecipeType recipeType) {
         RecipeListFragment fragment = new RecipeListFragment();
         Bundle args = new Bundle();
         args.putSerializable(EXTRA_RECIPE_TYPE, recipeType);
@@ -45,7 +46,7 @@ public class RecipeListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRecipes = new ArrayList<>();
-        mRecipeType = (Recipe.RecipeType) getArguments().getSerializable(EXTRA_RECIPE_TYPE);
+        mRecipeType = (RecipeType) getArguments().getSerializable(EXTRA_RECIPE_TYPE);
         calculateRecipeArray();
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(mRecipeType.toString());
@@ -95,7 +96,7 @@ public class RecipeListFragment extends ListFragment {
 
         Log.d(MainActivity.TAG, "calculate, before arr length = " + mRecipes.size());
 
-        if (mRecipeType.equals(Recipe.RecipeType.FAVORITE)) {
+        if (mRecipeType.equals(RecipeType.FAVORITE)) {
             for (Recipe recipe : allRecipes) {
                 if (recipe.isFavorite())
                     mRecipes.add(recipe);

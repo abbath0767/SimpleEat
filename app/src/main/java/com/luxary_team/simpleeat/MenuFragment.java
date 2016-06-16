@@ -1,6 +1,6 @@
 package com.luxary_team.simpleeat;
 
-import android.app.FragmentManager;
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -17,13 +17,15 @@ import android.widget.ListView;
 import com.luxary_team.simpleeat.interfaces.SelectItemDrawerCallback;
 import com.luxary_team.simpleeat.objects.Recipe;
 import com.luxary_team.simpleeat.objects.RecipeLab;
+import com.luxary_team.simpleeat.objects.RecipeType;
+import com.luxary_team.simpleeat.ui.KitchenStep1Fragment;
 
 import java.util.ArrayList;
 
 public class MenuFragment extends ListFragment {
 
     private ArrayList<Recipe> mRecipes;
-    private ArrayList<Recipe.RecipeType> mUsedRecipeTypes = new ArrayList<>();
+    private ArrayList<RecipeType> mUsedRecipeTypes = new ArrayList<>();
     private Button mButton;
     private SelectItemDrawerCallback mCallback;
 
@@ -39,9 +41,10 @@ public class MenuFragment extends ListFragment {
             @Override
             public void onClick(View v) {
                 mCallback.selectItemInDrawer(1);
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, new KitchenFragment()).commit();
+                Recipe recipe = new Recipe();
+                Fragment fragment = KitchenStep1Fragment.newInstance(recipe);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, fragment).commit();
             }
         });
 
@@ -56,7 +59,7 @@ public class MenuFragment extends ListFragment {
 
         mCallback = (SelectItemDrawerCallback) getActivity();
 
-        ArrayAdapter<Recipe.RecipeType> adapter = new ArrayAdapter<Recipe.RecipeType>(getActivity(),
+        ArrayAdapter<RecipeType> adapter = new ArrayAdapter<RecipeType>(getActivity(),
                 android.R.layout.simple_expandable_list_item_1,
                 mUsedRecipeTypes);
 
@@ -68,7 +71,7 @@ public class MenuFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Recipe.RecipeType recipeType = (Recipe.RecipeType) getListAdapter().getItem(position);
+        RecipeType recipeType = (RecipeType) getListAdapter().getItem(position);
 
         RecipeListFragment recipeListFragment = (RecipeListFragment) RecipeListFragment.newInstance(recipeType);
         getFragmentManager().beginTransaction()
@@ -104,7 +107,7 @@ public class MenuFragment extends ListFragment {
     private void calculateRecipeType() {
         for (Recipe recipe: mRecipes) {
             if (recipe.isFavorite()) {
-                mUsedRecipeTypes.add(Recipe.RecipeType.FAVORITE);
+                mUsedRecipeTypes.add(RecipeType.FAVORITE);
                 break;
             }
         }

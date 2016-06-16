@@ -1,83 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-
-    <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Шаг 1"
-        android:textSize="20dp"
-        android:textStyle="bold"/>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:progress="33"/>
-
-    <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/new_recipe_title_photo"/>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/kitchen_step_1_photo_image_view"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:background="@android:color/darker_gray"/>
+            android:layout_height="wrap_content">
 
-        <ImageButton
-            android:background="@null"
-            android:id="@+id/kitchen_step_1_photo_take_button"
-            android:layout_width="wrap_content"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/take_photo"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
-
-    </RelativeLayout>
-
-    <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/new_recipe_title_edit_text_hint"/>
-
-    <EditText
-        android:id="@+id/new_recipe_step1_title_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="@string/new_recipe_title_edit_text_hint"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        android:gravity="bottom"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/kitchen_step_1_next_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:drawablePadding="6dp"
-            android:drawableRight="@drawable/ic_next_step"
             android:gravity="center"
-            android:text="next"/>
+            android:text="Шаг 1"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progress="33"/>
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/new_recipe_title_photo"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/kitchen_step_1_photo_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:background="@android:color/darker_gray"/>
+
+            <ImageButton
+                android:id="@+id/kitchen_step_1_photo_take_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:src="@drawable/take_photo"/>
+
+        </RelativeLayout>
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/new_recipe_title_edit_text_hint"/>
+
+        <EditText
+            android:id="@+id/new_recipe_step1_title_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="@string/new_recipe_title_edit_text_hint"/>
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/new_recipe_type"/>
+
+        <Spinner
+            android:id="@+id/new_recipe_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/recipe_type_array"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/kitchen_step_1_next_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:drawablePadding="6dp"
+                android:drawableRight="@drawable/ic_next_step"
+                android:gravity="center"
+                android:text="next"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

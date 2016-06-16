@@ -39,6 +39,7 @@ import com.luxary_team.simpleeat.objects.RecipeElementLab;
 import com.luxary_team.simpleeat.objects.RecipeLab;
 import com.luxary_team.simpleeat.objects.RecipeStep;
 import com.luxary_team.simpleeat.objects.RecipeStepLab;
+import com.luxary_team.simpleeat.objects.RecipeType;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,8 +67,8 @@ public class KitchenFragment extends Fragment {
     private RecipeLab mRecipeLab;
     private RecipeElementLab mRecipeElementLab;
     private RecipeStepLab mRecipeStepLab;
-    private Recipe.RecipeType mRecipeType;
-    private Recipe.RecipeType[] recipeTypesWithoutFavorite;
+    private RecipeType mRecipeType;
+    private RecipeType[] recipeTypesWithoutFavorite;
     private Recipe mRecipe;
     private ArrayList<RecipeElement> mRecipeElements;
     private ArrayList<RecipeStep> mRecipeSteps;
@@ -102,7 +103,7 @@ public class KitchenFragment extends Fragment {
         View view = inflater.inflate(R.layout.kitchen_fragment, container, false);
 
         //remove last element
-        recipeTypesWithoutFavorite = Recipe.RecipeType.values();
+        recipeTypesWithoutFavorite = RecipeType.values();
         recipeTypesWithoutFavorite = Arrays.copyOf(recipeTypesWithoutFavorite, recipeTypesWithoutFavorite.length - 1);
 
         mTitleEditText = (EditText) view.findViewById(R.id.new_recipe_title_edit_text);
@@ -122,7 +123,7 @@ public class KitchenFragment extends Fragment {
         });
 
         mTypeSpinner = (Spinner) view.findViewById(R.id.new_resipe_type_spinner);
-        ArrayAdapter<Recipe.RecipeType> adapter = new ArrayAdapter<>(getActivity(),
+        ArrayAdapter<RecipeType> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_expandable_list_item_1, recipeTypesWithoutFavorite);
         mTypeSpinner.setAdapter(adapter);
         mTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -130,7 +131,7 @@ public class KitchenFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent,
                                        View itemSelected, int position, long selectedId) {
 
-                Recipe.RecipeType recipe = (Recipe.RecipeType) parent.getAdapter().getItem(position);
+                RecipeType recipe = (RecipeType) parent.getAdapter().getItem(position);
 
                 mRecipeType = recipe;
                 mRecipe.setRecipeType(mRecipeType);
