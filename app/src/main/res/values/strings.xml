@@ -39,8 +39,7 @@
         сортировать их по спискам, удобным для отображения.</string>
     <string name="information_title_features">Реализованные фичи:\n1. Создание и просмотр рецепта с
         шагами, ингридиентами\n2. Сортировка по типам\n3. Фотографии рецептов\n4. Корзина</string>
-    <string name="information_title_features_new">В ближайшем будущем будет реализовано:\n1. Более удобный конструктор шагов
-        \n2. Таймер для шагов\n3. Редизайн =)</string>
+    <string name="information_title_features_new">В ближайшем будущем будет реализовано:\n1. Таймер для шагов\n2. Редизайн =)</string>
 
     <!--sync with enum-->
     <string-array name="recipe_type_array">

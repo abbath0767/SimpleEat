@@ -46,7 +46,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+//todo DELETE CLASS
 public class KitchenFragment extends Fragment {
 
     private static final int REQUEST_CAMERA = 3;

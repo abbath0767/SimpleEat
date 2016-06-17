@@ -140,9 +140,9 @@ public class KitchenStep1Fragment extends Fragment {
         mButtonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KitchenStep2Fragment fragmentStep2 = KitchenStep2Fragment.newInstance(mRecipe);
+                KitchenStep2Fragment step2Fragment = KitchenStep2Fragment.newInstance(mRecipe);
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, fragmentStep2)
+                        .replace(R.id.content_frame, step2Fragment)
                         .addToBackStack(null)
                         .commit();
             }

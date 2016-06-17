@@ -193,16 +193,18 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
         // if navigation drawer is opened, hide the action items
 //        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 //        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
-        String fragmentName = getFragmentManager().findFragmentById(R.id.content_frame).getClass().getSimpleName();
+
 
 //        Log.d(TAG, "Prepare Options Menu in " + fragmentName);
 
-        if (fragmentName.equals(MenuFragment.class.getSimpleName()) ||
-                fragmentName.equals(RecipeListFragment.class.getSimpleName())) {
-            menu.findItem(R.id.search_view).setVisible(true);
-        } else {
-            menu.findItem(R.id.search_view).setVisible(false);
-        }
+            //search button in two fragments
+        //        String fragmentName = getFragmentManager().findFragmentById(R.id.content_frame).getClass().getSimpleName();
+//        if (fragmentName.equals(MenuFragment.class.getSimpleName()) ||
+//                fragmentName.equals(RecipeListFragment.class.getSimpleName())) {
+//            menu.findItem(R.id.search_view).setVisible(true);
+//        } else {
+//            menu.findItem(R.id.search_view).setVisible(false);
+//        }
         return super.onPrepareOptionsMenu(menu);
     }
 

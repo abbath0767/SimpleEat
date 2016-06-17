@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,27 +12,27 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.luxary_team.simpleeat.MainActivity;
 import com.luxary_team.simpleeat.R;
 import com.luxary_team.simpleeat.objects.Recipe;
-import com.luxary_team.simpleeat.objects.RecipeChild;
 import com.luxary_team.simpleeat.objects.RecipeElement;
-import com.luxary_team.simpleeat.objects.RecipeLab;
 
 import java.util.ArrayList;
+
+import static com.luxary_team.simpleeat.Utils.StepUtilModifier.setClickableRemoveImageButton;
+import static com.luxary_team.simpleeat.Utils.StepUtilModifier.updateArrayOfChilds;
 
 public class KitchenStep2Fragment extends Fragment{
 
     public static final String PARENT = "parent";
 
     private Recipe mRecipe;
-    private RecipeLab mRecipeLab;
     private ArrayList<RecipeElement> mRecipeElements;
 
     private LinearLayout mLinearLayoutContainerElements;
     private ImageButton mImageButtonAddElement;
     private ImageButton mImageButtonRemoveElement;
     private Button mButtonNext;
+    private Button mButtonBack;
 
 
     public static KitchenStep2Fragment newInstance(Recipe recipe) {
@@ -50,9 +49,7 @@ public class KitchenStep2Fragment extends Fragment{
         super.onCreate(savedInstanceState);
 
         mRecipe = (Recipe) getArguments().getSerializable(PARENT);
-        mRecipeLab = RecipeLab.get(getActivity());
         mRecipeElements = new ArrayList<>();
-
     }
 
     @Override
@@ -83,7 +80,7 @@ public class KitchenStep2Fragment extends Fragment{
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         anotherRecipeElement.setName(s.toString());
-                        updateArrayOfChilds(anotherRecipeElement, mRecipeElements);
+                        updateArrayOfChilds(anotherRecipeElement, mRecipeElements, mRecipe);
                     }
 
                     @Override
@@ -102,7 +99,7 @@ public class KitchenStep2Fragment extends Fragment{
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         anotherRecipeElement.setCount(s.toString());
-                        updateArrayOfChilds(anotherRecipeElement, mRecipeElements);
+                        updateArrayOfChilds(anotherRecipeElement, mRecipeElements, mRecipe);
                     }
 
                     @Override
@@ -133,34 +130,42 @@ public class KitchenStep2Fragment extends Fragment{
         mButtonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(MainActivity.TAG, "next button clicked");
-                Log.d(MainActivity.TAG, "Recipe UUID: " + mRecipe.getId().toString());
-                Log.d(MainActivity.TAG, "Recipe title: " + mRecipe.getTitle());
-                Log.d(MainActivity.TAG, "Recipe type: " + mRecipe.getRecipeType());
-                for (RecipeElement elem: mRecipeElements)
-                    Log.d(MainActivity.TAG, "element: " + elem.getName() + ", " + elem.getCount());
+                KitchenStep3Fragment step3Fragment = KitchenStep3Fragment.newInstance(mRecipe, mRecipeElements);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, step3Fragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
+        mButtonBack = (Button) rootView.findViewById(R.id.kitchen_step_2_back_button);
+        mButtonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
             }
         });
 
         return rootView;
     }
 
-    //todo make simple method
-    private <T extends RecipeChild> void updateArrayOfChilds(T element, ArrayList<T> array) {
-        if (!array.contains(element)) {
-            element.setParentRecipeUUID(mRecipe.getId().toString());
-            array.add(element);
-        }
-    }
 
-    private void setClickableRemoveImageButton(LinearLayout linearLayout, ImageButton button) {
-        if (linearLayout.getChildCount() == 1) {
-            button.setClickable(false);
-            button.setEnabled(false);
-        } else {
-            button.setClickable(true);
-            button.setEnabled(true);
-        }
-    }
+
+//    //todo make simple method
+//    private <T extends RecipeChild> void updateArrayOfChilds(T element, ArrayList<T> array) {
+//        if (!array.contains(element)) {
+//            element.setParentRecipeUUID(mRecipe.getId().toString());
+//            array.add(element);
+//        }
+//    }
+//
+//    private void setClickableRemoveImageButton(LinearLayout linearLayout, ImageButton button) {
+//        if (linearLayout.getChildCount() == 1) {
+//            button.setClickable(false);
+//            button.setEnabled(false);
+//        } else {
+//            button.setClickable(true);
+//            button.setEnabled(true);
+//        }
+//    }
 }

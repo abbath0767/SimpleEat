@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -10,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Шаг 2"
+        android:text="Шаг 3"
         android:textSize="20dp"
         android:textStyle="bold"/>
 
@@ -19,7 +18,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:progress="66"/>
+        android:progress="100"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,17 +26,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 style="?android:listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/new_recipe_element_title"/>
+                android:text="@string/new_recipe_step_title"/>
 
             <LinearLayout
-                android:id="@+id/list_view_element_container"
+                android:id="@+id/list_view_step_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -49,14 +48,14 @@
                     android:orientation="horizontal">
 
                     <ImageButton
-                        android:id="@+id/kitchen_button_add_element"
+                        android:id="@+id/kitchen_button_add_step"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:src="@drawable/ic_add"/>
 
                     <ImageButton
-                        android:id="@+id/kitchen_button_remove_element"
+                        android:id="@+id/kitchen_button_remove_step"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -72,7 +71,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/kitchen_step_2_back_button"
+                    android:id="@+id/kitchen_step_3_back_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -84,7 +83,7 @@
                     android:text="back"/>
 
                 <Button
-                    android:id="@+id/kitchen_step_2_next_button"
+                    android:id="@+id/kitchen_step_3_save_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -92,11 +91,11 @@
                     android:drawablePadding="6dp"
                     android:drawableRight="@drawable/ic_next_step"
                     android:gravity="center"
-                    android:text="next"/>
+                    android:text="Save"/>
 
             </RelativeLayout>
-
         </LinearLayout>
 
     </ScrollView>
+
 </LinearLayout>
