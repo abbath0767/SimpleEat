@@ -57,5 +57,6 @@
     <string name="send_my_vk">http://vk.com/abbath</string>
     <string name="empty_basket">У вас нет отмеченных ингридиентов</string>
     <string name="recipe_photo_title">Фотография</string>
+    <string name="new_recipe_portion_count_title">Выберите количество порций</string>
 
 </resources>

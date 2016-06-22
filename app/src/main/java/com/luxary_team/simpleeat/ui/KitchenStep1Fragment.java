@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.luxary_team.simpleeat.MainActivity;
@@ -44,6 +45,7 @@ public class KitchenStep1Fragment extends Fragment {
     public static final String PARENT = "parent";
     private static final int REQUEST_CAMERA = 3;
     private static final int REQUEST_SELECT_FILE = 4;
+    private int portionCount = 0;
 
     private Recipe mRecipe;
     private RecipeLab mRecipeLab;
@@ -59,6 +61,9 @@ public class KitchenStep1Fragment extends Fragment {
     private SelectItemDrawerCallback mCallback;
     private File mPhotoFile;
     private Spinner mTypeSpinner;
+    private TextView mPortionCountTextView;
+    private ImageButton mPlusImageButton;
+    private ImageButton mMinusImageButton;
 
     public static KitchenStep1Fragment newInstance(Recipe recipe) {
         //todo make Recipe impl Parcelable or Serializable
@@ -95,15 +100,20 @@ public class KitchenStep1Fragment extends Fragment {
         mButtonNext = (Button) rootView.findViewById(R.id.kitchen_step_1_next_button);
         mImageButton = (ImageButton) rootView.findViewById(R.id.kitchen_step_1_photo_take_button); //todo make invisability if we have a photo
         mImageViewPhoto = (ImageView) rootView.findViewById(R.id.kitchen_step_1_photo_image_view);
+        mPortionCountTextView = (TextView) rootView.findViewById(R.id.potion_count_text_view);
+        mPlusImageButton = (ImageButton) rootView.findViewById(R.id.portion_plus);
+        mMinusImageButton = (ImageButton) rootView.findViewById(R.id.portion_minus);
 
         mEditTextTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mRecipe.setTitle(s.toString());
             }
+
             @Override
             public void afterTextChanged(Editable s) {
             }
@@ -148,11 +158,34 @@ public class KitchenStep1Fragment extends Fragment {
             }
         });
 
+        mPlusImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                portionCount++;
+                portionCountChange();
+            }
+        });
+
+        mMinusImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                portionCount--;
+                portionCountChange();
+            }
+        });
+
         return rootView;
     }
 
     private void hidePhotoIcon() {
         // TODO: 15/06/16 make invis this
+    }
+
+    private void portionCountChange() {
+        if (portionCount < 0)
+            portionCount++;
+
+        mPortionCountTextView.setText(String.valueOf(portionCount));
     }
 
     private void selectImage() {
