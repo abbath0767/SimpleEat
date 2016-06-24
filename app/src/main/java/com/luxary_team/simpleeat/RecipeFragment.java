@@ -41,6 +41,7 @@ public class RecipeFragment extends Fragment {
     private LinearLayout mLinearLayoutRecipeElements;
     private LinearLayout mLinearLayoutRecipeSteps;
     private ImageView mImageViewPhoto;
+    private TextView mTestTextView;
 
     private Recipe mRecipe;
     private ArrayList<RecipeElement> mRecipeElements;
@@ -105,6 +106,9 @@ public class RecipeFragment extends Fragment {
             mImageViewPhoto.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
         }
+
+        mTestTextView = (TextView) rootView.findViewById(R.id.recipe_fragment_test_text_view);
+        mTestTextView.setText("portions: " + mRecipe.getPortionCount() + ", time: " + mRecipe.getRecipeTime());
 
         return rootView;
     }

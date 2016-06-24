@@ -25,7 +25,9 @@ public class RecipeDBHelper extends SQLiteOpenHelper{
                     RecipeTable.Cols.UUID + ", " +
                     RecipeTable.Cols.TITLE + ", " +
                     RecipeTable.Cols.FAVORITE + ", " +
-                    RecipeTable.Cols.TYPE + ")");
+                    RecipeTable.Cols.TYPE + ", " +
+                    RecipeTable.Cols.TIME + ", " +
+                    RecipeTable.Cols.PORTIONS +")");
         Log.d(MainActivity.TAG, "recipes db created succesfully");
 
         db.execSQL("create table " + RecipeElementTable.NAME + "(" +

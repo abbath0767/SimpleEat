@@ -102,6 +102,8 @@ public class RecipeLab {
         content.put(RecipeTable.Cols.TITLE, recipe.getTitle());
         content.put(RecipeTable.Cols.FAVORITE, recipe.isFavorite() ? 1 : 0);
         content.put(RecipeTable.Cols.TYPE, recipe.getRecipeType().toString());
+        content.put(RecipeTable.Cols.TIME, recipe.getRecipeTime());
+        content.put(RecipeTable.Cols.PORTIONS, recipe.getPortionCount());
 
         return content;
     }

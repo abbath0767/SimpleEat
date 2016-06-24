@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
         }
         if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, fragment).commit();
             mDrawerList.setItemChecked(position, true);

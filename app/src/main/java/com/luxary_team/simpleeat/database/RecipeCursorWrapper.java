@@ -20,6 +20,8 @@ public class RecipeCursorWrapper extends CursorWrapper {
         String title = getString(getColumnIndex(RecipeTable.Cols.TITLE));
         int isSolved = getInt(getColumnIndex(RecipeTable.Cols.FAVORITE));
         String recipeType = getString(getColumnIndex(RecipeTable.Cols.TYPE));
+        String recipeTime = getString(getColumnIndex(RecipeTable.Cols.TIME));
+        int portions = getShort(getColumnIndex(RecipeTable.Cols.PORTIONS));
 
         RecipeType actual = null;
         for (RecipeType rt: RecipeType.values()) {
@@ -31,6 +33,8 @@ public class RecipeCursorWrapper extends CursorWrapper {
         recipe.setTitle(title);
         recipe.setFavotite(isSolved != 0);
         recipe.setRecipeType(actual);
+        recipe.setRecipeTime(recipeTime);
+        recipe.setPortionCount(portions);
         return recipe;
     }
 }

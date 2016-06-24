@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.luxary_team.simpleeat.MainActivity;
 import com.luxary_team.simpleeat.MenuFragment;
 import com.luxary_team.simpleeat.R;
 import com.luxary_team.simpleeat.interfaces.SelectItemDrawerCallback;
@@ -134,10 +132,6 @@ public class KitchenStep3Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 RecipeLab.get(getActivity()).addRecipe(mRecipe);
-
-                Log.d(MainActivity.TAG, "mRecipeSTeps length = " + mRecipeSteps.size());
-                for (RecipeStep step : mRecipeSteps)
-                    Log.d(MainActivity.TAG, "step: " + step);
 
                 RecipeStepLab.get(getActivity()).setAndSaveRecipeSteps(mRecipeSteps);
                 RecipeElementLab.get(getActivity()).setAndSaveRecipeElements(mRecipeElements);

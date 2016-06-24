@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,9 @@ public class KitchenStep1Fragment extends Fragment {
     private static final int REQUEST_CAMERA = 3;
     private static final int REQUEST_SELECT_FILE = 4;
     private int portionCount = 0;
+    private int hour = 0;
+    private int minuts = 0;
+    private String mRecipeTime = "0:00";
 
     private Recipe mRecipe;
     private RecipeLab mRecipeLab;
@@ -64,6 +68,8 @@ public class KitchenStep1Fragment extends Fragment {
     private TextView mPortionCountTextView;
     private ImageButton mPlusImageButton;
     private ImageButton mMinusImageButton;
+    private NumberPicker mHourNumberPicker;
+    private NumberPicker mMinute1NumberPicker;
 
     public static KitchenStep1Fragment newInstance(Recipe recipe) {
         //todo make Recipe impl Parcelable or Serializable
@@ -103,6 +109,8 @@ public class KitchenStep1Fragment extends Fragment {
         mPortionCountTextView = (TextView) rootView.findViewById(R.id.potion_count_text_view);
         mPlusImageButton = (ImageButton) rootView.findViewById(R.id.portion_plus);
         mMinusImageButton = (ImageButton) rootView.findViewById(R.id.portion_minus);
+        mHourNumberPicker = (NumberPicker) rootView.findViewById(R.id.kitchen_hour_number_picker);
+        mMinute1NumberPicker = (NumberPicker) rootView.findViewById(R.id.kitchen_minute1_number_picker);
 
         mEditTextTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -150,6 +158,14 @@ public class KitchenStep1Fragment extends Fragment {
         mButtonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String tmp = String.valueOf(minuts);
+                tmp = tmp.length() == 1 ? ("0" + tmp) : tmp;
+
+                mRecipeTime = hour + ":" + tmp;
+                mRecipe.setRecipeTime(mRecipeTime);
+                mRecipe.setPortionCount(portionCount);
+                Log.d(MainActivity.TAG, "recipe coock time = " + mRecipeTime);
+                Log.d(MainActivity.TAG, "recipe portions count = " + portionCount);
                 KitchenStep2Fragment step2Fragment = KitchenStep2Fragment.newInstance(mRecipe);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, step2Fragment)
@@ -171,6 +187,23 @@ public class KitchenStep1Fragment extends Fragment {
             public void onClick(View v) {
                 portionCount--;
                 portionCountChange();
+            }
+        });
+
+        mHourNumberPicker.setMinValue(0);
+        mHourNumberPicker.setMaxValue(23);
+        mHourNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                hour = newVal;
+            }
+        });
+        mMinute1NumberPicker.setMaxValue(0);
+        mMinute1NumberPicker.setMaxValue(59);
+        mMinute1NumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                minuts = newVal;
             }
         });
 

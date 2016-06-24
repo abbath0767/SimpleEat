@@ -76,14 +76,6 @@
                 style="?android:listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/new_recipe_portion_count_title"/>
-
-            <include layout="@layout/kitchen_portion_picker"/>
-
-            <TextView
-                style="?android:listSeparatorTextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="@string/new_recipe_type"/>
 
             <Spinner
@@ -92,9 +84,25 @@
                 android:layout_height="wrap_content"
                 android:entries="@array/recipe_type_array"/>
 
+            <TextView
+                style="?android:listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_recipe_portion_count_title"/>
+
+            <include layout="@layout/kitchen_portion_picker"/>
+
+            <TextView
+                style="?android:listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_recipe_portion_time_title"/>
+
+            <include layout="@layout/kitchen_time_picker"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:gravity="bottom"
@@ -115,5 +123,7 @@
         </LinearLayout>
 
     </ScrollView>
+
+
 
 </LinearLayout>

@@ -8,6 +8,9 @@ public class Recipe implements Serializable{
     private String mTitle;
     private RecipeType mType;
     private boolean favorite;
+    //new parameters
+    private int portionCount;
+    private String recipeTime;
 
     public String getPhotoFileName() {
         return "IMG_" + getId().toString() + ".jpg";
@@ -44,6 +47,22 @@ public class Recipe implements Serializable{
     public void setRecipeType(RecipeType type) {this.mType = type;}
 
     public RecipeType getRecipeType() {return mType;}
+
+    public String getRecipeTime() {
+        return recipeTime;
+    }
+
+    public void setRecipeTime(String time) {
+        this.recipeTime = time;
+    }
+
+    public int getPortionCount() {
+        return portionCount;
+    }
+
+    public void setPortionCount(int portionCount) {
+        this.portionCount = portionCount;
+    }
 
     @Override
     public String toString() {
