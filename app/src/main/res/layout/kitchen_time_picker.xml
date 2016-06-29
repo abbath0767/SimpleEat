@@ -1,29 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:gravity="center"
               android:orientation="horizontal">
 
-    <NumberPicker
-        android:id="@+id/kitchen_hour_number_picker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </NumberPicker>
-
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Часов"/>
+        android:gravity="center">
 
-    <NumberPicker
-        android:id="@+id/kitchen_minute1_number_picker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></NumberPicker>
+        <NumberPicker
+            android:id="@+id/kitchen_hour_number_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+        </NumberPicker>
 
-    <TextView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/kitchen_hour_number_picker"
+            android:layout_centerInParent="true"
+            android:text="@string/time_picker_hours"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Минут"/>
+        android:gravity="center">
+
+        <NumberPicker
+            android:id="@+id/kitchen_minute1_number_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            ></NumberPicker>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/kitchen_minute1_number_picker"
+            android:layout_centerInParent="true"
+            android:text="@string/time_picker_minuts"
+            />
+    </RelativeLayout>
 
 </LinearLayout>

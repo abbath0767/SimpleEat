@@ -104,7 +104,7 @@ public class KitchenStep1Fragment extends Fragment {
 
         mEditTextTitle = (EditText) rootView.findViewById(R.id.new_recipe_step1_title_edit_text);
         mButtonNext = (Button) rootView.findViewById(R.id.kitchen_step_1_next_button);
-        mImageButton = (ImageButton) rootView.findViewById(R.id.kitchen_step_1_photo_take_button); //todo make invisability if we have a photo
+        mImageButton = (ImageButton) rootView.findViewById(R.id.kitchen_step_1_photo_take_button);
         mImageViewPhoto = (ImageView) rootView.findViewById(R.id.kitchen_step_1_photo_image_view);
         mPortionCountTextView = (TextView) rootView.findViewById(R.id.potion_count_text_view);
         mPlusImageButton = (ImageButton) rootView.findViewById(R.id.portion_plus);
@@ -124,6 +124,14 @@ public class KitchenStep1Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+            }
+        });
+
+        mImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+                hidePhotoIcon();
             }
         });
 
@@ -211,7 +219,8 @@ public class KitchenStep1Fragment extends Fragment {
     }
 
     private void hidePhotoIcon() {
-        // TODO: 15/06/16 make invis this
+        if (mImageViewPhoto.getDrawable() == null)
+            mImageButton.setVisibility(View.GONE);
     }
 
     private void portionCountChange() {

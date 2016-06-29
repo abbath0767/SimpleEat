@@ -98,13 +98,17 @@
                 android:layout_height="wrap_content"
                 android:text="@string/new_recipe_portion_time_title"/>
 
-            <include layout="@layout/kitchen_time_picker"/>
+            <include
+                layout="@layout/kitchen_time_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
+                android:layout_marginRight="16dp"
                 android:gravity="bottom"
                 android:orientation="vertical">
 
@@ -123,7 +127,6 @@
         </LinearLayout>
 
     </ScrollView>
-
 
 
 </LinearLayout>

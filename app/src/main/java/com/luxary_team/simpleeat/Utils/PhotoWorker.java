@@ -11,7 +11,7 @@ import java.io.IOException;
 public class PhotoWorker {
     public static void bitmapToFile(Bitmap bm, File file) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
 
         FileOutputStream fo;
         try {
