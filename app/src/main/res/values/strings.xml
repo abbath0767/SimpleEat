@@ -34,11 +34,11 @@
         <item>Отмена</item>
     </string-array>
 
-    <string name="information_title">Simple Eat v0.3</string>
+    <string name="information_title">Simple Eat v0.6</string>
     <string name="information_title_app">Данное приложение позволяет создавать свои рецепты для их использования в будущем
         сортировать их по спискам, удобным для отображения.</string>
     <string name="information_title_features">Реализованные фичи:\n1. Создание и просмотр рецепта с
-        шагами, ингридиентами\n2. Сортировка по типам\n3. Фотографии рецептов\n4. Корзина</string>
+        шагами, ингридиентами\n2. Сортировка по типам\n3. Фотографии рецептов\n4. Корзина\n5. Интро)</string>
     <string name="information_title_features_new">В ближайшем будущем будет реализовано:\n1. Таймер для шагов\n2. Редизайн =)</string>
 
     <!--sync with enum-->

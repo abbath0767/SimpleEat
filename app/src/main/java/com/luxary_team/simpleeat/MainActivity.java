@@ -2,8 +2,11 @@ package com.luxary_team.simpleeat;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +22,7 @@ import android.widget.ListView;
 import com.luxary_team.simpleeat.interfaces.SelectItemDrawerCallback;
 import com.luxary_team.simpleeat.objects.Recipe;
 import com.luxary_team.simpleeat.ui.KitchenStep1Fragment;
+import com.luxary_team.simpleeat.ui.intro.AppIntroActivity;
 
 public class MainActivity extends AppCompatActivity implements SelectItemDrawerCallback {
     public static final String TAG = "myLogTag";
@@ -35,10 +39,34 @@ public class MainActivity extends AppCompatActivity implements SelectItemDrawerC
 
     private String[] viewNames;
 
+    public boolean isFirstStart;
+    public static final String FIRST_START_KEY = "firstStart";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+//        Introduction?
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                isFirstStart = pref.getBoolean(FIRST_START_KEY, true);
+
+                if (isFirstStart) {
+                    Intent intent = new Intent(MainActivity.this, AppIntroActivity.class);
+                    startActivity(intent);
+
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putBoolean(FIRST_START_KEY, false).apply();
+                }
+            }
+        });
+
+        t.start();
 
         if (savedInstanceState != null) {
             setTitle(savedInstanceState.getCharSequence("title"));
